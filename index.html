@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CreandoPulseras | Tienda Oficial</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">CreandoPulseras</div>
+        <div class="cart-icon" onclick="toggleCart()">
+            🛒 Carrito (<span id="cart-count">0</span>)
+        </div>
+    </header>
+
+    <main>
+        <h2>Nuestras Colecciones</h2>
+        <div class="products-grid" id="products-container">
+            </div>
+    </main>
+
+    <div id="cart-modal" class="cart-modal hidden">
+        <div class="cart-content">
+            <span class="close-btn" onclick="toggleCart()">&times;</span>
+            <h3>Tu Carrito</h3>
+            <div id="cart-items"></div>
+            <div class="cart-total">Total: $<span id="total-price">0.00</span></div>
+            <button class="checkout-btn">Proceder al Pago</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
