@@ -14,7 +14,6 @@ async function loadProducts() {
     container.innerHTML = '<p style="text-align:center; width:100%;">Cargando catálogo de pulseras...</p>';
 
     try {
-        // Llama a tu Google Sheet para pedir los productos
         const response = await fetch(SCRIPT_URL);
         products = await response.json();
         renderProducts();
@@ -36,7 +35,6 @@ function renderProducts() {
     products.forEach(product => {
         const card = document.createElement('div');
         card.className = 'product-card';
-        // Formatear precio para que siempre tenga 2 decimales
         const price = parseFloat(product.price) || 0;
         
         card.innerHTML = `
@@ -108,10 +106,9 @@ if (adminForm) {
         formData.append('stock', document.getElementById('stock').value);
         formData.append('price', document.getElementById('price').value);
 
-        // AQUÍ ESTABA EL ERROR: Ya agregué mode: 'no-cors'
         fetch(SCRIPT_URL, {
             method: 'POST',
-            mode: 'no-cors', 
+            mode: 'no-cors', // Segurança restaurada
             body: formData
         })
         .then(response => {
@@ -129,10 +126,6 @@ if (adminForm) {
     });
 }
 
-// Arrancar la página buscando productos
-loadProducts();
-
-
 // ==========================================
 // FUNCIÓN DE PAGO (WHATSAPP)
 // ==========================================
@@ -143,9 +136,7 @@ function checkout() {
     }
 
     // 🔴 REEMPLAZA ESTO CON TU NÚMERO REAL
-    // Usa tu código de país (ej. 52 para México) seguido de tu número.
-    // SIN el signo +, SIN espacios y SIN guiones. Ejemplo: "529991234567"
-    const miWhatsApp = "9813493773"; 
+    const miWhatsApp = "PON_TU_NUMERO_AQUI"; 
 
     let mensaje = "¡Hola CreandoPulseras! ✨ Quiero confirmar este pedido:\n\n";
     let total = 0;
@@ -158,9 +149,11 @@ function checkout() {
 
     mensaje += `\n*Total a pagar: $${total.toFixed(2)}*\n\n¿Me confirmas dónde deposito?`;
 
-    // Convertimos el texto para que WhatsApp lo entienda y abrimos la app
     const mensajeCodificado = encodeURIComponent(mensaje);
     const url = `https://wa.me/${miWhatsApp}?text=${mensajeCodificado}`;
     
     window.open(url, '_blank');
 }
+
+// Arrancar la página buscando productos
+loadProducts();
