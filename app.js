@@ -19,7 +19,7 @@ async function loadProducts() {
         products = await response.json();
         renderProducts();
     } catch (error) {
-        container.innerHTML = '<p>Error al cargar los productos. Intenta más tarde.</p>';
+        container.innerHTML = '<p style="text-align:center; width:100%;"><b>Error de conexión:</b> Asegúrate de que al publicar tu Google Script elegiste "Cualquier persona" (Anyone) en los accesos.</p>';
         console.error(error);
     }
 }
@@ -93,14 +93,13 @@ function updateCartUI() {
 const adminForm = document.getElementById('product-form');
 if (adminForm) {
     adminForm.addEventListener('submit', function(e) {
-        e.preventDefault(); // Evita que la página parpadee al enviar
+        e.preventDefault(); 
         
         const btn = adminForm.querySelector('button');
         const originalText = btn.innerText;
         btn.innerText = "Guardando en la base de datos...";
         btn.disabled = true;
 
-        // Recolectar lo que escribiste en las cajitas
         const formData = new URLSearchParams();
         formData.append('sku', document.getElementById('sku').value);
         formData.append('image', document.getElementById('image-url').value);
@@ -109,15 +108,15 @@ if (adminForm) {
         formData.append('stock', document.getElementById('stock').value);
         formData.append('price', document.getElementById('price').value);
 
-        // Enviar por el puente hacia Google Sheets
+        // ¡AQUÍ ESTÁ LA MAGIA QUE FALTABA! (mode: 'no-cors')
         fetch(SCRIPT_URL, {
             method: 'POST',
+            mode: 'no-cors',
             body: formData
         })
-        .then(response => response.text())
-        .then(data => {
+        .then(() => {
             alert("¡Éxito! Producto guardado en tu inventario.");
-            adminForm.reset(); // Deja las cajitas en blanco para el siguiente
+            adminForm.reset(); 
             btn.innerText = originalText;
             btn.disabled = false;
         })
