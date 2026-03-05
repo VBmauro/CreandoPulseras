@@ -58,34 +58,93 @@ function toggleCart() {
 }
 
 function addToCart(sku) {
-    // Al usar String() evitamos que falle si el SKU son puros números
-    const product = products.find(p => String(p.sku) === String(sku));
+    const product = products.find(p => p.sku === sku);
     if (product) {
         cart.push(product);
         updateCartUI();
         alert("¡Añadido al carrito!");
-    } else {
-        alert("Hubo un error al buscar el producto.");
     }
 }
 
 function updateCartUI() {
     const countDisplay = document.getElementById('cart-count');
     const itemsDisplay = document.getElementById('cart-items');
+    const subtotalDisplay = document.getElementById('subtotal-price');
     const totalDisplay = document.getElementById('total-price');
     
-    if(!countDisplay || !itemsDisplay || !totalDisplay) return;
+    if(!countDisplay || !itemsDisplay || !subtotalDisplay || !totalDisplay) return;
 
     countDisplay.innerText = cart.length;
     itemsDisplay.innerHTML = '';
     
-    let total = 0;
+    let subtotal = 0;
     cart.forEach(item => {
         const price = parseFloat(item.price) || 0;
-        total += price;
-        itemsDisplay.innerHTML += `<p>${item.sku} - $${price.toFixed(2)}</p>`;
+        subtotal += price;
+        itemsDisplay.innerHTML += `<p>▪️ ${item.sku} - $${price.toFixed(2)}</p>`;
     });
-    totalDisplay.innerText = total.toFixed(2);
+
+    const costoEnvio = 50.00;
+    
+    subtotalDisplay.innerText = subtotal.toFixed(2);
+    
+    if (cart.length > 0) {
+        totalDisplay.innerText = (subtotal + costoEnvio).toFixed(2);
+    } else {
+        totalDisplay.innerText = "0.00";
+    }
+}
+
+// ==========================================
+// FUNCIÓN DE PAGO (WHATSAPP)
+// ==========================================
+function checkout() {
+    if (cart.length === 0) {
+        alert("Tu carrito está vacío. ¡Añade unas pulseras primero!");
+        return;
+    }
+
+    // Recoger los datos del cliente
+    const nombre = document.getElementById('customer-name').value.trim();
+    const telefono = document.getElementById('customer-phone').value.trim();
+    const direccion = document.getElementById('customer-address').value.trim();
+
+    // Validar que no dejen espacios en blanco
+    if (!nombre || !telefono || !direccion) {
+        alert("Por favor, llena tus datos de envío completos para poder procesar tu pedido.");
+        return;
+    }
+
+    // 🔴 REEMPLAZA ESTO CON TU NÚMERO REAL OTRA VEZ
+    const miWhatsApp = "9813493773"; 
+
+    let mensaje = "¡Hola CreandoPulseras! ✨ Quiero confirmar mi pedido:\n\n";
+    let subtotal = 0;
+
+    cart.forEach(item => {
+        const precio = parseFloat(item.price) || 0;
+        mensaje += `▪️ 1x SKU: ${item.sku} ($${precio.toFixed(2)})\n`;
+        subtotal += precio;
+    });
+
+    const costoEnvio = 50.00;
+    const totalFinal = subtotal + costoEnvio;
+
+    mensaje += `\n📦 *Subtotal:* $${subtotal.toFixed(2)}`;
+    mensaje += `\n🚚 *Envío (MEXPOST):* $${costoEnvio.toFixed(2)}`;
+    mensaje += `\n💰 *TOTAL A PAGAR:* $${totalFinal.toFixed(2)}\n\n`;
+    
+    mensaje += `📍 *DATOS DE ENVÍO:*\n`;
+    mensaje += `👤 Nombre: ${nombre}\n`;
+    mensaje += `📞 Teléfono: ${telefono}\n`;
+    mensaje += `🏠 Dirección: ${direccion}\n\n`;
+
+    mensaje += `¿Me confirmas dónde deposito?`;
+
+    const mensajeCodificado = encodeURIComponent(mensaje);
+    const url = `https://wa.me/${miWhatsApp}?text=${mensajeCodificado}`;
+    
+    window.open(url, '_blank');
 }
 
 // ==========================================
@@ -139,7 +198,7 @@ function checkout() {
     }
 
     // 🔴 REEMPLAZA ESTO CON TU NÚMERO REAL
-    const miWhatsApp = "9813493773"; 
+    const miWhatsApp = "PON_TU_NUMERO_AQUI"; 
 
     let mensaje = "¡Hola CreandoPulseras! ✨ Quiero confirmar este pedido:\n\n";
     let total = 0;
@@ -159,6 +218,4 @@ function checkout() {
 }
 
 // Arrancar la página buscando productos
-
 loadProducts();
-
