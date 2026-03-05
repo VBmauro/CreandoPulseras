@@ -104,3 +104,51 @@ button:hover {
     margin: 10px 0 20px;
     box-sizing: border-box;
 }
+/* --- ESTILOS NUEVOS PARA EL CARRITO --- */
+.cart-summary {
+    border-top: 1px solid #eee;
+    margin-top: 15px;
+    padding-top: 10px;
+    text-align: right;
+}
+.cart-summary p { margin: 5px 0; color: #666; font-size: 14px; }
+.cart-total { color: var(--text); margin-top: 10px; font-size: 18px; }
+
+.customer-info {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 6px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+}
+.customer-info h4 { margin-top: 0; margin-bottom: 12px; font-size: 14px; color: var(--text); }
+.customer-info input, .customer-info textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+.customer-info textarea { resize: vertical; min-height: 60px; }
+
+/* --- ESTILOS PARA LA CANTIDAD DE PRODUCTOS --- */
+.add-to-cart-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+.qty-input {
+    width: 60px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+    font-family: inherit;
+    font-size: 16px;
+}
+.add-to-cart-container button {
+    margin-top: 0; /* Quita el margen viejo */
+    flex-grow: 1; /* Hace que el botón ocupe el resto del espacio */
+}

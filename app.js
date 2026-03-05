@@ -37,13 +37,17 @@ function renderProducts() {
         card.className = 'product-card';
         const price = parseFloat(product.price) || 0;
         
+        // Aquí agregamos la cajita de cantidad (qty-input)
         card.innerHTML = `
             <img src="${product.image}" alt="Pulsera ${product.sku}">
             <h3>SKU: ${product.sku}</h3>
             <p>${product.description}</p>
             <small>Medida: ${product.measurements} | Stock: ${product.stock}</small>
             <h4>$${price.toFixed(2)}</h4>
-            <button onclick="addToCart('${product.sku}')">Añadir al Carrito</button>
+            <div class="add-to-cart-container">
+                <input type="number" id="qty-${product.sku}" value="1" min="1" max="${product.stock}" class="qty-input">
+                <button onclick="addToCart('${product.sku}')">Añadir</button>
+            </div>
         `;
         container.appendChild(card);
     });
@@ -58,12 +62,27 @@ function toggleCart() {
 }
 
 function addToCart(sku) {
-    // Aquí está la solución de los SKU que convertimos a texto
     const product = products.find(p => String(p.sku) === String(sku));
+    
     if (product) {
-        cart.push(product);
+        // Obtenemos la cantidad que el cliente escribió en la cajita
+        const qtyInput = document.getElementById(`qty-${sku}`);
+        const cantidadPedida = parseInt(qtyInput.value) || 1;
+
+        // Revisamos si la pulsera ya estaba en el carrito
+        const productoExistente = cart.find(item => String(item.sku) === String(sku));
+
+        if (productoExistente) {
+            // Si ya estaba, le sumamos la nueva cantidad
+            productoExistente.cartQuantity += cantidadPedida;
+        } else {
+            // Si es nueva, la clonamos y le ponemos su cantidad
+            cart.push({ ...product, cartQuantity: cantidadPedida });
+        }
+
         updateCartUI();
-        alert("¡Añadido al carrito!");
+        alert(`¡Añadido al carrito (${cantidadPedida} piezas)!`);
+        qtyInput.value = 1; // Regresamos la cajita a 1 por defecto
     } else {
         alert("Hubo un error al buscar el producto.");
     }
@@ -75,21 +94,26 @@ function updateCartUI() {
     const subtotalDisplay = document.getElementById('subtotal-price');
     const totalDisplay = document.getElementById('total-price');
     
-    // Si falta alguna caja en el HTML, el código se detiene para no romperse
     if(!countDisplay || !itemsDisplay || !subtotalDisplay || !totalDisplay) return;
 
-    countDisplay.innerText = cart.length;
     itemsDisplay.innerHTML = '';
     
     let subtotal = 0;
+    let totalArticulos = 0;
+
     cart.forEach(item => {
         const price = parseFloat(item.price) || 0;
-        subtotal += price;
-        itemsDisplay.innerHTML += `<p>▪️ ${item.sku} - $${price.toFixed(2)}</p>`;
+        const totalPorItem = price * item.cartQuantity; // Multiplica precio por cantidad
+        
+        subtotal += totalPorItem;
+        totalArticulos += item.cartQuantity;
+        
+        itemsDisplay.innerHTML += `<p>▪️ ${item.cartQuantity}x ${item.sku} - $${totalPorItem.toFixed(2)}</p>`;
     });
 
+    countDisplay.innerText = totalArticulos; // Actualiza el número de arriba
+
     const costoEnvio = 50.00;
-    
     subtotalDisplay.innerText = subtotal.toFixed(2);
     
     if (cart.length > 0) {
@@ -141,7 +165,7 @@ if (adminForm) {
 }
 
 // ==========================================
-// FUNCIÓN DE PAGO (WHATSAPP) CON ENVÍO
+// FUNCIÓN DE PAGO (WHATSAPP)
 // ==========================================
 function checkout() {
     if (cart.length === 0) {
@@ -151,9 +175,10 @@ function checkout() {
 
     const nombre = document.getElementById('customer-name').value.trim();
     const telefono = document.getElementById('customer-phone').value.trim();
+    const cp = document.getElementById('customer-cp').value.trim(); // Nuevo dato
     const direccion = document.getElementById('customer-address').value.trim();
 
-    if (!nombre || !telefono || !direccion) {
+    if (!nombre || !telefono || !cp || !direccion) {
         alert("Por favor, llena tus datos de envío completos para poder procesar tu pedido.");
         return;
     }
@@ -165,9 +190,10 @@ function checkout() {
     let subtotal = 0;
 
     cart.forEach(item => {
-        const precio = parseFloat(item.price) || 0;
-        mensaje += `▪️ 1x SKU: ${item.sku} ($${precio.toFixed(2)})\n`;
-        subtotal += precio;
+        const price = parseFloat(item.price) || 0;
+        const totalPorItem = price * item.cartQuantity;
+        mensaje += `▪️ ${item.cartQuantity}x SKU: ${item.sku} ($${totalPorItem.toFixed(2)})\n`;
+        subtotal += totalPorItem;
     });
 
     const costoEnvio = 50.00;
@@ -180,6 +206,7 @@ function checkout() {
     mensaje += `📍 *DATOS DE ENVÍO:*\n`;
     mensaje += `👤 Nombre: ${nombre}\n`;
     mensaje += `📞 Teléfono: ${telefono}\n`;
+    mensaje += `📮 C.P.: ${cp}\n`;
     mensaje += `🏠 Dirección: ${direccion}\n\n`;
 
     mensaje += `¿Me confirmas dónde deposito?`;
