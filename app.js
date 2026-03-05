@@ -136,7 +136,7 @@ function checkout() {
     }
 
     // 🔴 REEMPLAZA ESTO CON TU NÚMERO REAL
-    const miWhatsApp = "PON_TU_NUMERO_AQUI"; 
+    const miWhatsApp = "9813493773"; 
 
     let mensaje = "¡Hola CreandoPulseras! ✨ Quiero confirmar este pedido:\n\n";
     let total = 0;
@@ -156,4 +156,5 @@ function checkout() {
 }
 
 // Arrancar la página buscando productos
+
 loadProducts();
