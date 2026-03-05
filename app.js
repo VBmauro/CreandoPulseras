@@ -131,3 +131,36 @@ if (adminForm) {
 
 // Arrancar la página buscando productos
 loadProducts();
+
+
+// ==========================================
+// FUNCIÓN DE PAGO (WHATSAPP)
+// ==========================================
+function checkout() {
+    if (cart.length === 0) {
+        alert("Tu carrito está vacío. ¡Añade unas pulseras primero!");
+        return;
+    }
+
+    // 🔴 REEMPLAZA ESTO CON TU NÚMERO REAL
+    // Usa tu código de país (ej. 52 para México) seguido de tu número.
+    // SIN el signo +, SIN espacios y SIN guiones. Ejemplo: "529991234567"
+    const miWhatsApp = "9813493773"; 
+
+    let mensaje = "¡Hola CreandoPulseras! ✨ Quiero confirmar este pedido:\n\n";
+    let total = 0;
+
+    cart.forEach(item => {
+        const precio = parseFloat(item.price) || 0;
+        mensaje += `▪️ 1x SKU: ${item.sku} ($${precio.toFixed(2)})\n`;
+        total += precio;
+    });
+
+    mensaje += `\n*Total a pagar: $${total.toFixed(2)}*\n\n¿Me confirmas dónde deposito?`;
+
+    // Convertimos el texto para que WhatsApp lo entienda y abrimos la app
+    const mensajeCodificado = encodeURIComponent(mensaje);
+    const url = `https://wa.me/${miWhatsApp}?text=${mensajeCodificado}`;
+    
+    window.open(url, '_blank');
+}
