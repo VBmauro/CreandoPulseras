@@ -25,7 +25,20 @@
             <span class="close-btn" onclick="toggleCart()">&times;</span>
             <h3>Tu Carrito</h3>
             <div id="cart-items"></div>
-            <div class="cart-total">Total: $<span id="total-price">0.00</span></div>
+            
+            <div class="cart-summary">
+                <p>Subtotal: $<span id="subtotal-price">0.00</span></p>
+                <p>Envío (MEXPOST): $50.00</p>
+                <h3 class="cart-total">Total: $<span id="total-price">0.00</span></h3>
+            </div>
+
+            <div class="customer-info">
+                <h4>Datos de Envío</h4>
+                <input type="text" id="customer-name" placeholder="Nombre completo" required>
+                <input type="tel" id="customer-phone" placeholder="Teléfono" required>
+                <textarea id="customer-address" placeholder="Calle, Número, Colonia, C.P., Ciudad y Estado" required></textarea>
+            </div>
+
             <button class="checkout-btn" onclick="checkout()">Proceder al Pago</button>
         </div>
     </div>

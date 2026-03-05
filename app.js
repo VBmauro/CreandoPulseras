@@ -5,11 +5,11 @@ let products = [];
 let cart = [];
 
 // ==========================================
-// CÓDIGO PARA LA TIENDA PÚBLICA (index.html)
+// CÓDIGO PARA LA TIENDA PÚBLICA
 // ==========================================
 async function loadProducts() {
     const container = document.getElementById('products-container');
-    if (!container) return; // Si no estamos en la tienda, ignora esto
+    if (!container) return; 
 
     container.innerHTML = '<p style="text-align:center; width:100%;">Cargando catálogo de pulseras...</p>';
 
@@ -18,7 +18,7 @@ async function loadProducts() {
         products = await response.json();
         renderProducts();
     } catch (error) {
-        container.innerHTML = '<p style="text-align:center; width:100%;"><b>Error de conexión:</b> Asegúrate de que al publicar tu Google Script elegiste "Cualquier persona" (Anyone) en los accesos.</p>';
+        container.innerHTML = '<p style="text-align:center; width:100%;"><b>Error de conexión.</b></p>';
         console.error(error);
     }
 }
@@ -58,11 +58,14 @@ function toggleCart() {
 }
 
 function addToCart(sku) {
-    const product = products.find(p => p.sku === sku);
+    // Aquí está la solución de los SKU que convertimos a texto
+    const product = products.find(p => String(p.sku) === String(sku));
     if (product) {
         cart.push(product);
         updateCartUI();
         alert("¡Añadido al carrito!");
+    } else {
+        alert("Hubo un error al buscar el producto.");
     }
 }
 
@@ -72,6 +75,7 @@ function updateCartUI() {
     const subtotalDisplay = document.getElementById('subtotal-price');
     const totalDisplay = document.getElementById('total-price');
     
+    // Si falta alguna caja en el HTML, el código se detiene para no romperse
     if(!countDisplay || !itemsDisplay || !subtotalDisplay || !totalDisplay) return;
 
     countDisplay.innerText = cart.length;
@@ -96,7 +100,48 @@ function updateCartUI() {
 }
 
 // ==========================================
-// FUNCIÓN DE PAGO (WHATSAPP)
+// CÓDIGO PARA EL PANEL PRIVADO
+// ==========================================
+const adminForm = document.getElementById('product-form');
+if (adminForm) {
+    adminForm.addEventListener('submit', function(e) {
+        e.preventDefault(); 
+        
+        const btn = adminForm.querySelector('button');
+        const originalText = btn.innerText;
+        btn.innerText = "Guardando en la base de datos...";
+        btn.disabled = true;
+
+        const formData = new URLSearchParams();
+        formData.append('sku', document.getElementById('sku').value);
+        formData.append('image', document.getElementById('image-url').value);
+        formData.append('description', document.getElementById('description').value);
+        formData.append('measurements', document.getElementById('measurements').value);
+        formData.append('stock', document.getElementById('stock').value);
+        formData.append('price', document.getElementById('price').value);
+
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: formData
+        })
+        .then(response => {
+            alert("¡Éxito! Producto guardado en tu inventario.");
+            adminForm.reset(); 
+            btn.innerText = originalText;
+            btn.disabled = false;
+        })
+        .catch(error => {
+            alert("¡Éxito! Producto enviado a la base de datos.");
+            adminForm.reset();
+            btn.innerText = originalText;
+            btn.disabled = false;
+        });
+    });
+}
+
+// ==========================================
+// FUNCIÓN DE PAGO (WHATSAPP) CON ENVÍO
 // ==========================================
 function checkout() {
     if (cart.length === 0) {
@@ -104,18 +149,16 @@ function checkout() {
         return;
     }
 
-    // Recoger los datos del cliente
     const nombre = document.getElementById('customer-name').value.trim();
     const telefono = document.getElementById('customer-phone').value.trim();
     const direccion = document.getElementById('customer-address').value.trim();
 
-    // Validar que no dejen espacios en blanco
     if (!nombre || !telefono || !direccion) {
         alert("Por favor, llena tus datos de envío completos para poder procesar tu pedido.");
         return;
     }
 
-    // 🔴 REEMPLAZA ESTO CON TU NÚMERO REAL OTRA VEZ
+    // 🔴 REEMPLAZA ESTO CON TU NÚMERO REAL
     const miWhatsApp = "9813493773"; 
 
     let mensaje = "¡Hola CreandoPulseras! ✨ Quiero confirmar mi pedido:\n\n";
@@ -140,76 +183,6 @@ function checkout() {
     mensaje += `🏠 Dirección: ${direccion}\n\n`;
 
     mensaje += `¿Me confirmas dónde deposito?`;
-
-    const mensajeCodificado = encodeURIComponent(mensaje);
-    const url = `https://wa.me/${miWhatsApp}?text=${mensajeCodificado}`;
-    
-    window.open(url, '_blank');
-}
-
-// ==========================================
-// CÓDIGO PARA EL PANEL PRIVADO (admin.html)
-// ==========================================
-const adminForm = document.getElementById('product-form');
-if (adminForm) {
-    adminForm.addEventListener('submit', function(e) {
-        e.preventDefault(); 
-        
-        const btn = adminForm.querySelector('button');
-        const originalText = btn.innerText;
-        btn.innerText = "Guardando en la base de datos...";
-        btn.disabled = true;
-
-        const formData = new URLSearchParams();
-        formData.append('sku', document.getElementById('sku').value);
-        formData.append('image', document.getElementById('image-url').value);
-        formData.append('description', document.getElementById('description').value);
-        formData.append('measurements', document.getElementById('measurements').value);
-        formData.append('stock', document.getElementById('stock').value);
-        formData.append('price', document.getElementById('price').value);
-
-        fetch(SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors', // Segurança restaurada
-            body: formData
-        })
-        .then(response => {
-            alert("¡Éxito! Producto guardado en tu inventario.");
-            adminForm.reset(); 
-            btn.innerText = originalText;
-            btn.disabled = false;
-        })
-        .catch(error => {
-            alert("¡Éxito! Producto enviado a la base de datos.");
-            adminForm.reset();
-            btn.innerText = originalText;
-            btn.disabled = false;
-        });
-    });
-}
-
-// ==========================================
-// FUNCIÓN DE PAGO (WHATSAPP)
-// ==========================================
-function checkout() {
-    if (cart.length === 0) {
-        alert("Tu carrito está vacío. ¡Añade unas pulseras primero!");
-        return;
-    }
-
-    // 🔴 REEMPLAZA ESTO CON TU NÚMERO REAL
-    const miWhatsApp = "PON_TU_NUMERO_AQUI"; 
-
-    let mensaje = "¡Hola CreandoPulseras! ✨ Quiero confirmar este pedido:\n\n";
-    let total = 0;
-
-    cart.forEach(item => {
-        const precio = parseFloat(item.price) || 0;
-        mensaje += `▪️ 1x SKU: ${item.sku} ($${precio.toFixed(2)})\n`;
-        total += precio;
-    });
-
-    mensaje += `\n*Total a pagar: $${total.toFixed(2)}*\n\n¿Me confirmas dónde deposito?`;
 
     const mensajeCodificado = encodeURIComponent(mensaje);
     const url = `https://wa.me/${miWhatsApp}?text=${mensajeCodificado}`;
