@@ -58,11 +58,14 @@ function toggleCart() {
 }
 
 function addToCart(sku) {
-    const product = products.find(p => p.sku === sku);
+    // Al usar String() evitamos que falle si el SKU son puros números
+    const product = products.find(p => String(p.sku) === String(sku));
     if (product) {
         cart.push(product);
         updateCartUI();
         alert("¡Añadido al carrito!");
+    } else {
+        alert("Hubo un error al buscar el producto.");
     }
 }
 
@@ -158,3 +161,4 @@ function checkout() {
 // Arrancar la página buscando productos
 
 loadProducts();
+
