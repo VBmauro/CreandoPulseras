@@ -108,10 +108,10 @@ if (adminForm) {
         formData.append('stock', document.getElementById('stock').value);
         formData.append('price', document.getElementById('price').value);
 
-        // ¡AQUÍ ESTÁ LA MAGIA QUE FALTABA! (mode: 'no-cors')
-        // Enviar por el puente hacia Google Sheets
+        // AQUÍ ESTABA EL ERROR: Ya agregué mode: 'no-cors'
         fetch(SCRIPT_URL, {
             method: 'POST',
+            mode: 'no-cors', 
             body: formData
         })
         .then(response => {
@@ -121,8 +121,6 @@ if (adminForm) {
             btn.disabled = false;
         })
         .catch(error => {
-            // Google a veces lanza una falsa alarma de seguridad (CORS) 
-            // aunque el dato SÍ se guardó. Por eso lo forzamos aquí:
             alert("¡Éxito! Producto enviado a la base de datos.");
             adminForm.reset();
             btn.innerText = originalText;
