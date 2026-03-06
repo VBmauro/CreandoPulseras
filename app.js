@@ -96,7 +96,7 @@ function checkout() {
 
     if (!nombre || !tel || !cp || !dir) return alert("Completa todos los datos de envío");
 
-    const miWhatsApp = "TU_NUMERO_AQUI"; // RECUERDA PONER TU NÚMERO
+    const miWhatsApp = "9813493773"; // RECUERDA PONER TU NÚMERO
 
     let mensaje = `¡Hola! Quiero confirmar mi pedido:\n\n`;
     let subtotal = 0;
@@ -114,5 +114,6 @@ function checkout() {
 
     window.open(`https://wa.me/${miWhatsApp}?text=${encodeURIComponent(mensaje)}`, '_blank');
 }
+
 
 loadProducts();
