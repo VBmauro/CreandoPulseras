@@ -1,4 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxYAv5_PQcYRtLinlyFny3vcabcC2WCN-eD476i7dCyBmLYw-LOBx5i8lHwqYKTuPpUrg/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxxBGxIt88o2gqqbamBVtDuWlQTkgchyOhk5VDKS2oDiea-VCGDi-BoXa2-h59rurHI/exec";
 
 let products = [];
 let cart = [];
@@ -91,14 +91,26 @@ function checkout() {
 
     const nombre = document.getElementById('customer-name').value.trim();
     const tel = document.getElementById('customer-phone').value.trim();
-    const cp = document.getElementById('customer-cp').value.trim(); // Lee el C.P.
+    const cp = document.getElementById('customer-cp').value.trim(); 
     const dir = document.getElementById('customer-address').value.trim();
 
     if (!nombre || !tel || !cp || !dir) return alert("Completa todos los datos de envío");
 
-    const miWhatsApp = "TU_NUMERO_AQUI"; // RECUERDA PONER TU NÚMERO
+    // --- NUEVO: AVISAR A GOOGLE PARA BAJAR STOCK ---
+    const formData = new URLSearchParams();
+    formData.append('action', 'updateStock');
+    formData.append('cart', JSON.stringify(cart));
 
-    let mensaje = `¡Hola! Quiero confirmar mi pedido:\n\n`;
+    fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: formData
+    });
+    // ----------------------------------------------
+
+    const miWhatsApp = "TU_NUMERO_REAL_AQUI"; 
+
+    let mensaje = `¡Hola CreandoPulseras! ✨ Confirmo mi pedido:\n\n`;
     let subtotal = 0;
 
     cart.forEach(item => {
@@ -107,13 +119,17 @@ function checkout() {
         subtotal += totalFila;
     });
 
-    mensaje += `\n📦 Subtotal: $${subtotal.toFixed(2)}`;
-    mensaje += `\n🚚 Envío (MEXPOST): $50.00`;
-    mensaje += `\n💰 TOTAL: $${(subtotal + 50).toFixed(2)}\n\n`;
-    mensaje += `📍 DATOS:\n👤 ${nombre}\n📞 ${tel}\n📮 C.P.: ${cp}\n🏠 ${dir}`;
+    const totalFinal = subtotal + 50;
+    mensaje += `\n💰 *TOTAL CON ENVÍO:* $${totalFinal.toFixed(2)}\n\n`;
+    mensaje += `📍 *ENVÍO:* ${nombre}, CP ${cp}. ${dir}`;
 
     window.open(`https://wa.me/${miWhatsApp}?text=${encodeURIComponent(mensaje)}`, '_blank');
-}
+    
+    // Opcional: Limpiar carrito tras la compra
+    cart = [];
+    updateCartUI();
+    toggleCart();
+}}
 // ==========================================
 // FUNCIONES DE ZOOM
 // ==========================================
