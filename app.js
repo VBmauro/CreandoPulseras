@@ -1,4 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw1b6VUMXexNTTDnvHFgWYno82tac9CzZwufFEdxfZRSUt14dO5lpJoDmsm2gug-uT_xw/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzKYlIdnfBIx-kg05Jcn1RBi4EJupPlV66XH4m4W7gauXXIqFB9eP_BYg6HqgEkJmdPdQ/exec";
 
 let products = [];
 let cart = [];
@@ -92,7 +92,7 @@ function checkout() {
 
     if (!nombre || !tel || !cp || !dir) return alert("Completa todos los datos de envío");
 
-    // ENVIAR ACTUALIZACIÓN DE STOCK A GOOGLE
+    // 1. AVISAR A GOOGLE PARA BAJAR STOCK
     const formData = new URLSearchParams();
     formData.append('action', 'updateStock');
     formData.append('cart', JSON.stringify(cart));
@@ -103,8 +103,8 @@ function checkout() {
         body: formData
     });
 
-    // CONFIGURAR WHATSAPP (PON TU NÚMERO AQUÍ)
-    const miWhatsApp = "9813493773"; 
+    // 2. ABRIR WHATSAPP (Asegúrate de que incluya el 52)
+    const miWhatsApp = "529813493773"; 
 
     let mensaje = `¡Hola CreandoPulseras! ✨ Confirmo mi pedido:\n\n`;
     let subtotal = 0;
@@ -120,6 +120,7 @@ function checkout() {
 
     window.open(`https://wa.me/${miWhatsApp}?text=${encodeURIComponent(mensaje)}`, '_blank');
     
+    // Limpiar carrito
     cart = [];
     updateCartUI();
     toggleCart();
