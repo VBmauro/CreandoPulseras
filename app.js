@@ -1,9 +1,18 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby2jrESaW8IuOC31K6AyGkYvYMebB4IL5yArvYkr8pfd12QH7GeSD6crUrmUiIY7fR_6A/exec"; // <--- ACTUALIZA ESTA URL
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby2jrESaW8IuOC31K6AyGkYvYMebB4IL5yArvYkr8pfd12QH7GeSD6crUrmUiIY7fR_6A/exec";
 
 let products = [];
 let cart = [];
 
-// CARGAR PRODUCTOS Y VISITAS
+// LISTA DE COLORES PASTEL SELECCIONADOS
+const pastelColors = [
+    '#FFF0F5', // Rosa suave (LavenderBlush)
+    '#FFFDE7', // Amarillo crema
+    '#E1F5FE', // Azul cielo claro
+    '#FFF3E0', // Naranja melocotón muy bajo
+    '#F3E5F5', // Morado lavanda
+    '#F1F8E9'  // Verde menta pálido
+];
+
 async function loadProducts() {
     const container = document.getElementById('products-container');
     const visitCounter = document.getElementById('visit-counter');
@@ -13,23 +22,26 @@ async function loadProducts() {
     try {
         const response = await fetch(SCRIPT_URL);
         const data = await response.json();
-        
         products = data.productos;
         renderProducts();
-        
-        // MOSTRAR VISITAS
         if (visitCounter) visitCounter.innerText = `Visitas: ${data.visitas}`;
     } catch (error) {
-        container.innerHTML = '<p>Error de conexión. Revisa el Script de Google.</p>';
+        container.innerHTML = '<p>Error de conexión con el catálogo.</p>';
     }
 }
 
 function renderProducts() {
     const container = document.getElementById('products-container');
     container.innerHTML = '';
+    
     products.forEach(product => {
+        // Seleccionar un color pastel aleatorio para cada recuadro
+        const randomColor = pastelColors[Math.floor(Math.random() * pastelColors.length)];
+        
         const card = document.createElement('div');
         card.className = 'product-card';
+        card.style.backgroundColor = randomColor; // Aplicar color pastel
+        
         card.innerHTML = `
             <img src="${product.image}" onclick="openZoom(this.src)">
             <h3>SKU: ${product.sku}</h3>
@@ -55,24 +67,22 @@ function addToCart(sku) {
         if (exist) exist.cantidad += qty;
         else cart.push({ ...product, cantidad: qty });
         updateCartUI();
-        alert(`¡Añadido! (${qty} piezas)`);
+        alert(`¡Añadido!`);
     }
 }
 
 function updateCartUI() {
     const itemsDiv = document.getElementById('cart-items');
     itemsDiv.innerHTML = '';
-    let subtotal = 0;
-    let totalQty = 0;
+    let sub = 0, totalQty = 0;
     cart.forEach(item => {
         const total = item.price * item.cantidad;
-        subtotal += total;
-        totalQty += item.cantidad;
+        sub += total; totalQty += item.cantidad;
         itemsDiv.innerHTML += `<p>▪️ ${item.cantidad}x ${item.sku} - $${total.toFixed(2)}</p>`;
     });
     document.getElementById('cart-count').innerText = totalQty;
-    document.getElementById('subtotal-price').innerText = subtotal.toFixed(2);
-    document.getElementById('total-price').innerText = cart.length > 0 ? (subtotal + 50).toFixed(2) : "0.00";
+    document.getElementById('subtotal-price').innerText = sub.toFixed(2);
+    document.getElementById('total-price').innerText = cart.length > 0 ? (sub + 50).toFixed(2) : "0.00";
 }
 
 function checkout() {
@@ -81,7 +91,7 @@ function checkout() {
     const tel = document.getElementById('customer-phone').value.trim();
     const cp = document.getElementById('customer-cp').value.trim();
     const dir = document.getElementById('customer-address').value.trim();
-    if (!nom || !tel || !cp || !dir) return alert("Por favor, llena todos tus datos de envío.");
+    if (!nom || !tel || !cp || !dir) return alert("Llena tus datos de envío.");
 
     const formData = new URLSearchParams();
     formData.append('action', 'updateStock');
@@ -89,7 +99,7 @@ function checkout() {
     fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: formData });
 
     const miWA = "529813493773";
-    let msg = `¡Hola CreandoPulseras! ✨ Confirmo mi pedido:\n\n`;
+    let msg = `¡Hola! Confirmo pedido:\n\n`;
     let sub = 0;
     cart.forEach(i => {
         msg += `▪️ ${i.cantidad}x SKU: ${i.sku} ($${(i.price * i.cantidad).toFixed(2)})\n`;
@@ -97,7 +107,6 @@ function checkout() {
     });
     msg += `\n💰 TOTAL: $${(sub + 50).toFixed(2)}\n📍 ENVÍO: ${nom}, CP ${cp}. ${dir}`;
     window.open(`https://wa.me/${miWA}?text=${encodeURIComponent(msg)}`, '_blank');
-    
     cart = []; updateCartUI(); toggleCart();
 }
 
