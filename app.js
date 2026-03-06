@@ -28,7 +28,7 @@ function renderProducts() {
         const price = parseFloat(product.price) || 0;
         
         card.innerHTML = `
-            <img src="${product.image}" alt="Pulsera">
+            <img src="${product.image}" alt="Pulsera" onclick="openZoom(this.src)">
             <h3>SKU: ${product.sku}</h3>
             <p>${product.description}</p>
             <small>Medida: ${product.measurements} | Stock: ${product.stock}</small>
@@ -96,7 +96,7 @@ function checkout() {
 
     if (!nombre || !tel || !cp || !dir) return alert("Completa todos los datos de envío");
 
-    const miWhatsApp = "9813493773"; // RECUERDA PONER TU NÚMERO
+    const miWhatsApp = "TU_NUMERO_AQUI"; // RECUERDA PONER TU NÚMERO
 
     let mensaje = `¡Hola! Quiero confirmar mi pedido:\n\n`;
     let subtotal = 0;
@@ -114,6 +114,19 @@ function checkout() {
 
     window.open(`https://wa.me/${miWhatsApp}?text=${encodeURIComponent(mensaje)}`, '_blank');
 }
+// ==========================================
+// FUNCIONES DE ZOOM
+// ==========================================
+function openZoom(imageSrc) {
+    const modal = document.getElementById('zoom-modal');
+    const zoomedImg = document.getElementById('zoomed-img');
+    zoomedImg.src = imageSrc;
+    modal.classList.remove('hidden');
+}
 
+function closeZoom() {
+    const modal = document.getElementById('zoom-modal');
+    modal.classList.add('hidden');
+}
 
 loadProducts();
