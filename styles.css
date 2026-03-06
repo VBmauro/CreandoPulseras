@@ -1,324 +1,47 @@
-/* ==========================================
-   VARIABLES Y ESTILOS GLOBALES
-   ========================================= */
-:root {
-    --primary: #f8f9fa;
-    --text: #333;
-    --accent: #d4af37; /* Dorado para detalles de joyería */
-}
+:root { --accent: #d4af37; --text: #333; }
+body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
 
-body {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    color: var(--text);
-}
-
-/* --- LIMPIEZA DE HEADER --- */
-header {
-    height: 0;
-    padding: 0;
-    margin: 0;
-}
-
-/* ==========================================
-   CARRITO FLOTANTE (TE SIGUE AL HACER SCROLL)
-   ========================================= */
+/* CARRITO FLOTANTE */
 .cart-icon {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: white;
-    padding: 12px 22px;
-    border-radius: 50px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    z-index: 1000;
-    cursor: pointer;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border: 1px solid #eee;
-    transition: all 0.3s ease;
+    position: fixed; top: 20px; right: 20px; background: white;
+    padding: 12px 20px; border-radius: 50px; z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2); cursor: pointer; font-weight: bold;
 }
 
-.cart-icon:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 25px rgba(0,0,0,0.2);
-}
-
-#cart-count {
-    color: var(--accent);
-}
-
-/* ==========================================
-   SECCIÓN HERO (PORTADA / BIO)
-   ========================================= */
-.hero {
-    width: 100%;
-    line-height: 0;
-}
-
-.hero img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-/* ==========================================
-   ZONA DE PRODUCTOS (FONDO PERSONALIZADO)
-   ========================================= */
+/* HERO Y FONDO */
+.hero img { width: 100%; height: auto; display: block; }
 main {
-    /* USAMOS TU IMAGEN DE FONDO */
     background-image: url('https://i.postimg.cc/nLD4zLyx/Fondo.png');
-    background-repeat: repeat;      /* Se repite infinitamente */
-    background-attachment: fixed;   /* Efecto de profundidad profesional */
-    background-size: auto;          /* Mantiene la calidad original de tu imagen */
-    padding-bottom: 80px;
-    min-height: 100vh;
+    background-repeat: repeat; background-attachment: fixed; padding-bottom: 20px;
 }
+main h2 { text-align: center; padding: 40px 0; color: var(--accent); letter-spacing: 2px; }
 
-main h2 {
-    margin-top: 0;
-    padding-top: 60px;
-    text-align: center;
-    font-weight: 300;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--accent); /* Título en dorado para que resalte */
-}
-
+/* GRILLA */
 .products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 40px;
-    padding: 40px;
-    max-width: 1200px;
-    margin: 0 auto;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px; padding: 20px; max-width: 1200px; margin: 0 auto;
 }
-
 .product-card {
-    background: white; /* Tarjetas blancas para que el producto sea el rey */
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-    text-align: center;
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: 1px solid rgba(0,0,0,0.03);
+    background: white; padding: 20px; border-radius: 12px; text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
+.product-card img { width: 100%; border-radius: 8px; cursor: zoom-in; }
 
-.product-card:hover {
-    transform: translateY(-10px);
-}
+/* FOOTER Y CONTACTO */
+.site-footer { padding: 60px 20px; background: rgba(255,255,255,0.5); backdrop-filter: blur(5px); margin-top: 40px; }
+.footer-content { max-width: 800px; margin: 0 auto; text-align: center; }
+.trust-text { font-style: italic; line-height: 1.8; color: #555; }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; border-top: 1px solid #ddd; padding-top: 20px; }
+.signature { font-family: serif; font-size: 22px; color: var(--accent); }
+.contact-link { color: var(--accent); text-decoration: none; font-weight: bold; letter-spacing: 1px; }
 
-.product-card img {
-    width: 100%;
-    border-radius: 10px;
-    cursor: zoom-in;
-    transition: transform 0.3s ease;
-}
-
-/* ==========================================
-   CANTIDAD Y BOTONES
-   ========================================= */
-.add-to-cart-container {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.qty-input {
-    width: 60px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    text-align: center;
-    font-size: 16px;
-}
-
-.add-to-cart-container button {
-    background: var(--text);
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    flex-grow: 1;
-    font-weight: bold;
-    transition: background 0.3s;
-}
-
-.add-to-cart-container button:hover {
-    background: #000;
-}
-
-/* ==========================================
-   MODALES (CARRITO Y ZOOM)
-   ========================================= */
+/* MODALES */
 .hidden { display: none !important; }
-
-.cart-modal {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.6);
-    z-index: 2000;
-    display: flex; justify-content: flex-end;
-}
-
-.cart-content {
-    background: white;
-    width: 100%;
-    max-width: 450px;
-    height: 100%;
-    padding: 40px;
-    overflow-y: auto;
-    box-sizing: border-box;
-}
-
-.customer-info {
-    background: #f8f9fa;
-    padding: 25px;
-    border-radius: 12px;
-    margin: 30px 0;
-    border: 1px solid #eee;
-}
-
-.customer-info input, .customer-info textarea {
-    width: 100%;
-    padding: 14px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-sizing: border-box;
-    font-size: 14px;
-}
-
-.checkout-btn {
-    width: 100%;
-    background: #25d366;
-    color: white;
-    padding: 18px;
-    border: none;
-    border-radius: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.checkout-btn:active {
-    transform: scale(0.98);
-}
-
-/* Lupa de Zoom */
-.zoom-modal {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.92);
-    z-index: 3000;
-    display: flex; justify-content: center; align-items: center;
-}
-
-#zoomed-img {
-    max-width: 90%;
-    max-height: 90%;
-    border-radius: 8px;
-    box-shadow: 0 0 30px rgba(255,255,255,0.1);
-}
-
-.close-btn, .close-zoom {
-    font-size: 35px;
-    cursor: pointer;
-    color: #333;
-}
-.close-zoom { color: white; position: absolute; top: 20px; right: 30px; }
-
-/* --- ESTILO DEL PIE DE PÁGINA (FOOTER) --- */
-.site-footer {
-    padding: 60px 20px;
-    text-align: center;
-    /* Un fondo sutil para que el texto sea legible sobre el mármol */
-    background: rgba(255, 255, 255, 0.4); 
-    backdrop-filter: blur(5px); /* Efecto de cristal esmerilado */
-    margin-top: 40px;
-    border-top: 1px solid rgba(212, 175, 55, 0.3);
-}
-
-.footer-content {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.trust-text {
-    font-size: 18px;
-    line-height: 1.8;
-    color: #444;
-    font-style: italic;
-    margin-bottom: 25px;
-}
-
-.trust-text strong {
-    color: #b8860b; /* Un dorado un poco más oscuro para resaltar materiales */
-    font-weight: 600;
-}
-
-.signature {
-    display: block;
-    font-family: 'Times New Roman', serif; /* Le da un toque de firma manual */
-    font-size: 24px;
-    color: var(--accent);
-    letter-spacing: 1px;
-    margin-top: 10px;
-}
-/* --- ESTILOS PARA EL PIE DE PÁGINA Y CONTACTO --- */
-.footer-bottom {
-    display: flex;
-    justify-content: space-between; /* Firma a la izquierda, Contacto a la derecha */
-    align-items: center;
-    margin-top: 30px;
-    border-top: 1px solid rgba(212, 175, 55, 0.2);
-    padding-top: 20px;
-}
-
-.contact-link {
-    color: var(--accent);
-    text-decoration: none;
-    font-weight: bold;
-    letter-spacing: 2px;
-    font-size: 14px;
-    transition: opacity 0.3s;
-}
-
-.contact-link:hover {
-    opacity: 0.6;
-}
-
-/* Tarjeta dentro de la ventanita de contacto */
-.contact-card {
-    background: white;
-    padding: 40px;
-    border-radius: 15px;
-    text-align: center;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    max-width: 400px;
-    width: 90%;
-    position: relative;
-    color: #333;
-    animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.contact-card h3 {
-    margin-top: 0;
-    color: var(--accent);
-    border-bottom: 1px solid #eee;
-    padding-bottom: 15px;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
+.cart-modal, .zoom-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; display: flex; justify-content: center; align-items: center; }
+.cart-content { background: white; width: 90%; max-width: 400px; height: 100%; position: absolute; right: 0; padding: 30px; overflow-y: auto; }
+.contact-card { background: white; padding: 40px; border-radius: 15px; text-align: center; position: relative; width: 90%; max-width: 350px; }
+.close-btn { cursor: pointer; font-size: 30px; float: right; }
+#zoomed-img { max-width: 90%; max-height: 90%; }
+.add-to-cart-container { display: flex; gap: 10px; margin-top: 10px; }
+.qty-input { width: 50px; text-align: center; }
+.checkout-btn { width: 100%; background: #25d366; color: white; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 20px; }

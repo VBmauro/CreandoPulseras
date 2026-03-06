@@ -1,4 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzKYlIdnfBIx-kg05Jcn1RBi4EJupPlV66XH4m4W7gauXXIqFB9eP_BYg6HqgEkJmdPdQ/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxxBGxIt88o2gqqbamBVtDuWlQTkgchyOhk5VDKS2oDiea-VCGDi-BoXa2-h59rurHI/exec";
 
 let products = [];
 let cart = [];
@@ -6,13 +6,13 @@ let cart = [];
 async function loadProducts() {
     const container = document.getElementById('products-container');
     if (!container) return; 
-    container.innerHTML = '<p style="text-align:center; width:100%;">Cargando catálogo...</p>';
+    container.innerHTML = '<p>Cargando catálogo...</p>';
     try {
         const response = await fetch(SCRIPT_URL);
         products = await response.json();
         renderProducts();
     } catch (error) {
-        container.innerHTML = '<p>Error de conexión al cargar productos.</p>';
+        container.innerHTML = '<p>Error de conexión.</p>';
     }
 }
 
@@ -22,131 +22,79 @@ function renderProducts() {
     products.forEach(product => {
         const card = document.createElement('div');
         card.className = 'product-card';
-        const price = parseFloat(product.price) || 0;
         card.innerHTML = `
-            <img src="${product.image}" alt="Pulsera" onclick="openZoom(this.src)">
+            <img src="${product.image}" onclick="openZoom(this.src)">
             <h3>SKU: ${product.sku}</h3>
             <p>${product.description}</p>
-            <small>Medida: ${product.measurements} | Stock: ${product.stock}</small>
-            <h4>$${price.toFixed(2)}</h4>
-            <div class="add-to-cart-container" style="display: flex; gap: 10px; margin-top: 10px;">
-                <input type="number" id="qty-${product.sku}" value="1" min="1" class="qty-input" style="width: 50px; padding: 5px;">
-                <button onclick="addToCart('${product.sku}')" style="flex-grow: 1;">Añadir</button>
+            <small>${product.measurements} | Stock: ${product.stock}</small>
+            <h4>$${parseFloat(product.price).toFixed(2)}</h4>
+            <div class="add-to-cart-container">
+                <input type="number" id="qty-${product.sku}" value="1" min="1" class="qty-input">
+                <button onclick="addToCart('${product.sku}')" style="flex-grow:1; cursor:pointer;">Añadir</button>
             </div>
         `;
         container.appendChild(card);
     });
 }
 
-function toggleCart() {
-    document.getElementById('cart-modal').classList.toggle('hidden');
-}
+function toggleCart() { document.getElementById('cart-modal').classList.toggle('hidden'); }
 
 function addToCart(sku) {
     const product = products.find(p => String(p.sku) === String(sku));
-    const qtyInput = document.getElementById(`qty-${sku}`);
-    const cantidad = parseInt(qtyInput.value) || 1;
-
+    const qty = parseInt(document.getElementById(`qty-${sku}`).value) || 1;
     if (product) {
-        const itemEnCarrito = cart.find(item => String(item.sku) === String(sku));
-        if (itemEnCarrito) {
-            itemEnCarrito.cantidad += cantidad;
-        } else {
-            cart.push({ ...product, cantidad: cantidad });
-        }
+        const exist = cart.find(i => String(i.sku) === String(sku));
+        if (exist) exist.cantidad += qty;
+        else cart.push({ ...product, cantidad: qty });
         updateCartUI();
-        alert("¡Producto añadido!");
+        alert("¡Añadido!");
     }
 }
 
 function updateCartUI() {
-    const itemsDisplay = document.getElementById('cart-items');
-    const subtotalDisplay = document.getElementById('subtotal-price');
-    const totalDisplay = document.getElementById('total-price');
-    const countDisplay = document.getElementById('cart-count');
-    
-    itemsDisplay.innerHTML = '';
+    const itemsDiv = document.getElementById('cart-items');
+    itemsDiv.innerHTML = '';
     let subtotal = 0;
-    let totalItems = 0;
-
+    let totalQty = 0;
     cart.forEach(item => {
-        const totalFila = item.price * item.cantidad;
-        subtotal += totalFila;
-        totalItems += item.cantidad;
-        itemsDisplay.innerHTML += `<p>▪️ ${item.cantidad}x ${item.sku} - $${totalFila.toFixed(2)}</p>`;
+        const total = item.price * item.cantidad;
+        subtotal += total;
+        totalQty += item.cantidad;
+        itemsDiv.innerHTML += `<p>▪️ ${item.cantidad}x ${item.sku} - $${total.toFixed(2)}</p>`;
     });
-
-    const envio = 50.0;
-    countDisplay.innerText = totalItems;
-    subtotalDisplay.innerText = subtotal.toFixed(2);
-    totalDisplay.innerText = cart.length > 0 ? (subtotal + envio).toFixed(2) : "0.00";
+    document.getElementById('cart-count').innerText = totalQty;
+    document.getElementById('subtotal-price').innerText = subtotal.toFixed(2);
+    document.getElementById('total-price').innerText = cart.length > 0 ? (subtotal + 50).toFixed(2) : "0.00";
 }
 
 function checkout() {
     if (cart.length === 0) return alert("Carrito vacío");
+    const nom = document.getElementById('customer-name').value;
+    const tel = document.getElementById('customer-phone').value;
+    const cp = document.getElementById('customer-cp').value;
+    const dir = document.getElementById('customer-address').value;
+    if (!nom || !tel || !cp || !dir) return alert("Llena tus datos");
 
-    const nombre = document.getElementById('customer-name').value.trim();
-    const tel = document.getElementById('customer-phone').value.trim();
-    const cp = document.getElementById('customer-cp').value.trim(); 
-    const dir = document.getElementById('customer-address').value.trim();
-
-    if (!nombre || !tel || !cp || !dir) return alert("Completa todos los datos de envío");
-
-    // 1. AVISAR A GOOGLE PARA BAJAR STOCK
     const formData = new URLSearchParams();
     formData.append('action', 'updateStock');
     formData.append('cart', JSON.stringify(cart));
+    fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: formData });
 
-    fetch(SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: formData
+    const miWA = "529813493773";
+    let msg = `¡Hola! Confirmo mi pedido:\n\n`;
+    let sub = 0;
+    cart.forEach(i => {
+        msg += `▪️ ${i.cantidad}x SKU: ${i.sku} ($${(i.price * i.cantidad).toFixed(2)})\n`;
+        sub += i.price * i.cantidad;
     });
-
-    // 2. ABRIR WHATSAPP (Asegúrate de que incluya el 52)
-    const miWhatsApp = "529813493773"; 
-
-    let mensaje = `¡Hola CreandoPulseras! ✨ Confirmo mi pedido:\n\n`;
-    let subtotal = 0;
-
-    cart.forEach(item => {
-        const totalFila = item.price * item.cantidad;
-        mensaje += `▪️ ${item.cantidad}x SKU: ${item.sku} ($${totalFila.toFixed(2)})\n`;
-        subtotal += totalFila;
-    });
-
-    mensaje += `\n💰 *TOTAL CON ENVÍO:* $${(subtotal + 50).toFixed(2)}\n\n`;
-    mensaje += `📍 *ENVÍO:* ${nombre}, CP ${cp}. ${dir}`;
-
-    window.open(`https://wa.me/${miWhatsApp}?text=${encodeURIComponent(mensaje)}`, '_blank');
-    
-    // Limpiar carrito
-    cart = [];
-    updateCartUI();
-    toggleCart();
+    msg += `\n💰 TOTAL: $${(sub + 50).toFixed(2)}\n📍 ENVÍO: ${nom}, CP ${cp}. ${dir}`;
+    window.open(`https://wa.me/${miWA}?text=${encodeURIComponent(msg)}`, '_blank');
+    cart = []; updateCartUI(); toggleCart();
 }
 
-function openZoom(imageSrc) {
-    const modal = document.getElementById('zoom-modal');
-    document.getElementById('zoomed-img').src = imageSrc;
-    modal.classList.remove('hidden');
-}
-
-function closeZoom() {
-    document.getElementById('zoom-modal').classList.add('hidden');
-}
+function openZoom(src) { document.getElementById('zoomed-img').src = src; document.getElementById('zoom-modal').classList.remove('hidden'); }
+function closeZoom() { document.getElementById('zoom-modal').classList.add('hidden'); }
+function openContact() { document.getElementById('contact-modal').classList.remove('hidden'); }
+function closeContact() { document.getElementById('contact-modal').classList.add('hidden'); }
 
 loadProducts();
-
-// ==========================================
-// FUNCIONES PARA EL MODAL DE CONTACTO
-// ==========================================
-function openContact() {
-    const modal = document.getElementById('contact-modal');
-    if (modal) modal.classList.remove('hidden');
-}
-
-function closeContact() {
-    const modal = document.getElementById('contact-modal');
-    if (modal) modal.classList.add('hidden');
-}
