@@ -14,24 +14,27 @@
     </header>
 
     <section class="hero">
-        <img src="https://i.postimg.cc/Z5T3mcHk/Bio.png" alt="Bio CreandoPulseras">
+        <img src="https://i.postimg.cc/Z5T3mcHk/Bio.png" alt="Presentación CreandoPulseras">
     </section>
 
     <main>
-        <h2>Nuestras Colecciones</h2>
+        <h2>Nuestra Colección</h2>
         <div class="products-grid" id="products-container"></div>
         
         <footer class="site-footer">
             <div class="footer-content">
                 <p class="trust-text">
                     "En <strong>CreandoPulseras</strong>, armamos con Amor y con la certeza de hacer cosas bellas para ti. 
-                    Usamos materiales de la mejor calidad para obtener un resultado hermoso y que luzcas de maravilla; 
+                    Usamos materiales de la mejor calidad para tener un resultado hermoso y que luzcas de maravilla; 
                     <strong>jamás usamos plástico ni acrílico</strong>, usamos perla cultivada, acero dorado, piedras naturales 
                     y cristales de la mejor calidad. Gracias por visitarnos, te aseguro que quedarás complacida."
                 </p>
                 <div class="footer-bottom">
                     <span class="signature">By Mauro Gutierrez</span>
-                    <a href="javascript:void(0)" class="contact-link" onclick="openContact()">CONTACTO</a>
+                    <div class="footer-stats">
+                        <span id="visit-counter" class="visit-counter">Visitas: ...</span>
+                        <a href="javascript:void(0)" class="contact-link" onclick="openContact()">CONTACTO</a>
+                    </div>
                 </div>
             </div>
         </footer>
@@ -52,7 +55,7 @@
                 <input type="text" id="customer-name" placeholder="Nombre completo" required>
                 <input type="tel" id="customer-phone" placeholder="Teléfono" required>
                 <input type="text" id="customer-cp" placeholder="Código Postal (C.P.)" required>
-                <textarea id="customer-address" placeholder="Dirección completa"></textarea>
+                <textarea id="customer-address" placeholder="Calle, Número, Colonia, Ciudad y Estado"></textarea>
             </div>
             <button class="checkout-btn" onclick="checkout()">Proceder al Pago</button>
         </div>
@@ -60,15 +63,15 @@
 
     <div id="zoom-modal" class="zoom-modal hidden" onclick="closeZoom()">
         <span class="close-zoom">&times;</span>
-        <img id="zoomed-img" src="" alt="Detalle">
+        <img id="zoomed-img" src="" alt="Zoom">
     </div>
 
     <div id="contact-modal" class="zoom-modal hidden" onclick="closeContact()">
         <div class="contact-card" onclick="event.stopPropagation()">
-            <span class="close-btn" onclick="closeContact()" style="color:#333">&times;</span>
-            <h3>Contacto</h3>
+            <span class="close-btn" onclick="closeContact()" style="color:#333; float:right;">&times;</span>
+            <h3 style="color:#d4af37; text-transform:uppercase;">Contacto</h3>
             <p><strong>Mauro Gutierrez</strong></p>
-            <p>📱 Whatsapp: <a href="https://wa.me/529813493773" target="_blank" style="color:#25d366; text-decoration:none;">9813493773</a></p>
+            <p>📱 Whatsapp: <a href="https://wa.me/529813493773" target="_blank" style="color:#25d366; text-decoration:none; font-weight:bold;">9813493773</a></p>
             <p>📍 San Francisco de Campeche, Campeche, México.</p>
         </div>
     </div>
