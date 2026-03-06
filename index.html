@@ -18,7 +18,7 @@
     </section>
 
     <main>
-        <h2>Nuestra Colección</h2>
+        <h2>Nuestras Colecciones</h2>
         <div class="products-grid" id="products-container"></div>
     </main>
 
@@ -30,21 +30,22 @@
                 <strong>jamás usamos plástico ni acrílico</strong>, usamos perla cultivada, acero dorado, piedras naturales 
                 y cristales de la mejor calidad. Gracias por visitarnos, te aseguro que quedarás complacida."
             </p>
-            <span class="signature">By Mauro Gutierrez</span>
+            <div class="footer-bottom">
+                <span class="signature">By Mauro Gutierrez</span>
+                <a href="javascript:void(0)" class="contact-link" onclick="openContact()">CONTACTO</a>
+            </div>
         </div>
     </footer>
 
-    <div id="cart-modal" class="cart-modal hidden">
-        <div class="cart-content">
-            <span class="close-btn" onclick="toggleCart()">&times;</span>
-            <h3>Tu Carrito</h3>
-            <div id="cart-items"></div>
-            
-            <div class="cart-summary">
-                <p>Subtotal: $<span id="subtotal-price">0.00</span></p>
-                <p>Envío (MEXPOST): $50.00</p>
-                <h3 class="cart-total">Total: $<span id="total-price">0.00</span></h3>
-            </div>
+    <div id="contact-modal" class="zoom-modal hidden" onclick="closeContact()">
+        <div class="contact-card" onclick="event.stopPropagation()">
+            <span class="close-zoom" onclick="closeContact()">&times;</span>
+            <h3>Información de Contacto</h3>
+            <p><strong>Mauro Gutierrez</strong></p>
+            <p>📱 Whatsapp: <a href="https://wa.me/529813493773" target="_blank" style="color: #25d366; text-decoration: none; font-weight: bold;">9813493773</a></p>
+            <p>📍 San Francisco de Campeche, Campeche, México.</p>
+        </div>
+    </div>
 
             <div class="customer-info">
                 <h4>Datos de Envío</h4>
@@ -65,6 +66,4 @@
 
     <script src="app.js"></script>
 </body>
-
 </html>
-

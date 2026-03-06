@@ -137,3 +137,16 @@ function closeZoom() {
 }
 
 loadProducts();
+
+// ==========================================
+// FUNCIONES PARA EL MODAL DE CONTACTO
+// ==========================================
+function openContact() {
+    const modal = document.getElementById('contact-modal');
+    if (modal) modal.classList.remove('hidden');
+}
+
+function closeContact() {
+    const modal = document.getElementById('contact-modal');
+    if (modal) modal.classList.add('hidden');
+}
