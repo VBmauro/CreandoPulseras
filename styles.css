@@ -233,3 +233,41 @@ main h2 {
     color: #333;
 }
 .close-zoom { color: white; position: absolute; top: 20px; right: 30px; }
+
+/* --- ESTILO DEL PIE DE PÁGINA (FOOTER) --- */
+.site-footer {
+    padding: 60px 20px;
+    text-align: center;
+    /* Un fondo sutil para que el texto sea legible sobre el mármol */
+    background: rgba(255, 255, 255, 0.4); 
+    backdrop-filter: blur(5px); /* Efecto de cristal esmerilado */
+    margin-top: 40px;
+    border-top: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.footer-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.trust-text {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #444;
+    font-style: italic;
+    margin-bottom: 25px;
+}
+
+.trust-text strong {
+    color: #b8860b; /* Un dorado un poco más oscuro para resaltar materiales */
+    font-weight: 600;
+}
+
+.signature {
+    display: block;
+    font-family: 'Times New Roman', serif; /* Le da un toque de firma manual */
+    font-size: 24px;
+    color: var(--accent);
+    letter-spacing: 1px;
+    margin-top: 10px;
+}
