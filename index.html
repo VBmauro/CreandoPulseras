@@ -3,24 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Oficial | CreandoPulseras</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <div class="logo">CreandoPulseras</div>
         <div class="cart-icon" onclick="toggleCart()">
-            🛒 Carrito (<span id="cart-count">0</span>)
+            🛒 Mi Carrito (<span id="cart-count">0</span>)
         </div>
     </header>
 
     <section class="hero">
-        <img src="https://i.postimg.cc/tTS58cWp/herobanner.png" alt="Presentación CreandoPulseras">
+        <img src="https://i.postimg.cc/Z5T3mcHk/Bio.png" alt="Presentación CreandoPulseras">
     </section>
 
     <main>
         <h2>Nuestras Colecciones</h2>
-        <div class="products-grid" id="products-container">
-            </div>
+        <div class="products-grid" id="products-container"></div>
     </main>
 
     <div id="cart-modal" class="cart-modal hidden">
@@ -49,11 +48,9 @@
 
     <div id="zoom-modal" class="zoom-modal hidden" onclick="closeZoom()">
         <span class="close-zoom">&times;</span>
-        <img id="zoomed-img" src="" alt="Detalle del producto">
+        <img id="zoomed-img" src="" alt="Zoom">
     </div>
 
     <script src="app.js"></script>
 </body>
-
 </html>
-
