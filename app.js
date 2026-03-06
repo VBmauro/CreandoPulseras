@@ -1,4 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxxBGxIt88o2gqqbamBVtDuWlQTkgchyOhk5VDKS2oDiea-VCGDi-BoXa2-h59rurHI/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw1b6VUMXexNTTDnvHFgWYno82tac9CzZwufFEdxfZRSUt14dO5lpJoDmsm2gug-uT_xw/exec";
 
 let products = [];
 let cart = [];
@@ -6,27 +6,23 @@ let cart = [];
 async function loadProducts() {
     const container = document.getElementById('products-container');
     if (!container) return; 
-
     container.innerHTML = '<p style="text-align:center; width:100%;">Cargando catálogo...</p>';
-
     try {
         const response = await fetch(SCRIPT_URL);
         products = await response.json();
         renderProducts();
     } catch (error) {
-        container.innerHTML = '<p>Error al cargar productos.</p>';
+        container.innerHTML = '<p>Error de conexión al cargar productos.</p>';
     }
 }
 
 function renderProducts() {
     const container = document.getElementById('products-container');
     container.innerHTML = '';
-    
     products.forEach(product => {
         const card = document.createElement('div');
         card.className = 'product-card';
         const price = parseFloat(product.price) || 0;
-        
         card.innerHTML = `
             <img src="${product.image}" alt="Pulsera" onclick="openZoom(this.src)">
             <h3>SKU: ${product.sku}</h3>
@@ -96,7 +92,7 @@ function checkout() {
 
     if (!nombre || !tel || !cp || !dir) return alert("Completa todos los datos de envío");
 
-    // --- NUEVO: AVISAR A GOOGLE PARA BAJAR STOCK ---
+    // ENVIAR ACTUALIZACIÓN DE STOCK A GOOGLE
     const formData = new URLSearchParams();
     formData.append('action', 'updateStock');
     formData.append('cart', JSON.stringify(cart));
@@ -106,9 +102,9 @@ function checkout() {
         mode: 'no-cors',
         body: formData
     });
-    // ----------------------------------------------
 
-    const miWhatsApp = "TU_NUMERO_REAL_AQUI"; 
+    // CONFIGURAR WHATSAPP (PON TU NÚMERO AQUÍ)
+    const miWhatsApp = "9813493773"; 
 
     let mensaje = `¡Hola CreandoPulseras! ✨ Confirmo mi pedido:\n\n`;
     let subtotal = 0;
@@ -119,30 +115,24 @@ function checkout() {
         subtotal += totalFila;
     });
 
-    const totalFinal = subtotal + 50;
-    mensaje += `\n💰 *TOTAL CON ENVÍO:* $${totalFinal.toFixed(2)}\n\n`;
+    mensaje += `\n💰 *TOTAL CON ENVÍO:* $${(subtotal + 50).toFixed(2)}\n\n`;
     mensaje += `📍 *ENVÍO:* ${nombre}, CP ${cp}. ${dir}`;
 
     window.open(`https://wa.me/${miWhatsApp}?text=${encodeURIComponent(mensaje)}`, '_blank');
     
-    // Opcional: Limpiar carrito tras la compra
     cart = [];
     updateCartUI();
     toggleCart();
-}}
-// ==========================================
-// FUNCIONES DE ZOOM
-// ==========================================
+}
+
 function openZoom(imageSrc) {
     const modal = document.getElementById('zoom-modal');
-    const zoomedImg = document.getElementById('zoomed-img');
-    zoomedImg.src = imageSrc;
+    document.getElementById('zoomed-img').src = imageSrc;
     modal.classList.remove('hidden');
 }
 
 function closeZoom() {
-    const modal = document.getElementById('zoom-modal');
-    modal.classList.add('hidden');
+    document.getElementById('zoom-modal').classList.add('hidden');
 }
 
 loadProducts();
