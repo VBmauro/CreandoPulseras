@@ -13,37 +13,10 @@
             🛒 Carrito (<span id="cart-count">0</span>)
         </div>
     </header>
-<section class="hero">
+
+    <section class="hero">
         <img src="https://i.postimg.cc/Z5T3mcHk/Bio.png" alt="Presentación CreandoPulseras">
     </section>
-
-    <main>
-        <h2>Nuestras Colecciones</h2>
-        ```
-
-### 2. Dale el estilo profesional en `styles.css`
-Copia este código al principio de tu archivo `styles.css` (o después de los estilos del `header`) para que la imagen se porte bien y no se deforme:
-
-```css
-/* --- SECCIÓN HERO (PORTADA) --- */
-.hero {
-    width: 100%;
-    overflow: hidden; /* Corta lo que sobre si la imagen es muy grande */
-    line-height: 0;   /* Quita un espacio blanco pequeño que suele salir abajo */
-}
-
-.hero img {
-    width: 100%;      /* Obliga a la imagen a ocupar todo el ancho */
-    height: auto;     /* Mantiene la proporción para que no se vea estirada */
-    display: block;
-    object-fit: cover; /* Hace que se vea bien en cualquier pantalla */
-}
-
-/* Ajuste para que el título no quede tan pegado a la portada */
-main h2 {
-    margin-top: 40px;
-    text-align: center;
-}
 
     <main>
         <h2>Nuestras Colecciones</h2>
@@ -67,18 +40,17 @@ main h2 {
                 <h4>Datos de Envío</h4>
                 <input type="text" id="customer-name" placeholder="Nombre completo" required>
                 <input type="tel" id="customer-phone" placeholder="Teléfono" required>
-                
                 <input type="text" id="customer-cp" placeholder="Código Postal (C.P.)" required>
-                
                 <textarea id="customer-address" placeholder="Calle, Número, Colonia, Ciudad y Estado" required></textarea>
             </div>
 
             <button class="checkout-btn" onclick="checkout()">Proceder al Pago</button>
         </div>
     </div>
+
     <div id="zoom-modal" class="zoom-modal hidden" onclick="closeZoom()">
         <span class="close-zoom">&times;</span>
-        <img id="zoomed-img" src="" alt="Zoom del producto">
+        <img id="zoomed-img" src="" alt="Detalle del producto">
     </div>
 
     <script src="app.js"></script>

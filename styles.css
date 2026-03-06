@@ -209,5 +209,24 @@ button:hover {
     font-size: 40px;
     font-weight: bold;
 }
+/* --- SECCIÓN HERO (PORTADA) --- */
+.hero {
+    width: 100%;
+    line-height: 0;   /* Evita espacios blancos extraños */
+}
+
+.hero img {
+    width: 100%;      /* Ocupa todo el ancho de la pantalla */
+    height: auto;     /* Mantiene la proporción original */
+    display: block;
+}
+
+/* Espaciado para que el título no choque con la imagen */
+main h2 {
+    margin-top: 50px;
+    text-align: center;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
 
 .hidden { display: none !important; }
