@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CreandoPulseras | Tienda Oficial</title>
+    <title>[Nombre de tu Tienda] | Tienda Oficial</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -14,7 +14,7 @@
     </header>
 
     <section class="hero">
-        <img src="https://i.postimg.cc/Z5T3mcHk/Bio.png" alt="Presentación CreandoPulseras">
+        <img src="https://i.postimg.cc/Z5T3mcHk/Bio.png" alt="Presentación">
     </section>
 
     <main>
@@ -24,13 +24,13 @@
         <footer class="site-footer">
             <div class="footer-content">
                 <p class="trust-text">
-                    "En <strong>CreandoPulseras</strong>, armamos con Amor y con la certeza de hacer cosas bellas para ti. 
+                    "En <strong>[Nombre de tu Tienda]</strong>, armamos con Amor y con la certeza de hacer cosas bellas para ti. 
                     Usamos productos de la mejor calidad para obtener un resultado hermoso y que luzcas de maravilla; 
                     <strong>jamás usamos plástico ni acrílico</strong>, usamos perla cultivada, acero dorado, piedras naturales 
                     y cristales de la mejor calidad. Gracias por visitarnos, te aseguro que quedarás complacida."
                 </p>
                 <div class="footer-bottom">
-                    <span class="signature">By Mauro Gutierrez</span>
+                    <span class="signature">By [Tu Nombre]</span>
                     <div class="footer-stats">
                         <span id="visit-counter" class="visit-counter">Visitas: ...</span>
                         <a href="javascript:void(0)" class="contact-link" onclick="openContact()">CONTACTO</a>
@@ -45,11 +45,23 @@
             <span class="close-btn" onclick="toggleCart()">&times;</span>
             <h3>Tu Carrito</h3>
             <div id="cart-items"></div>
+
+            <div class="shipping-note">
+                <h4>🚚 Opciones de Entrega</h4>
+                <ul>
+                    <li><strong>Fuera de la ciudad:</strong> Envío por MEXPOST ($50.00).</li>
+                    <li><strong>En la ciudad:</strong> Entrega a domicilio (Gratis según distancia).</li>
+                    <li><strong>Mandaditos:</strong> Costo según distancia (a cargo del comprador).</li>
+                </ul>
+            </div>
+            
             <div class="cart-summary">
                 <p>Subtotal: $<span id="subtotal-price">0.00</span></p>
-                <p>Envío (MEXPOST): $50.00</p>
+                <p>Envío base (MEXPOST): $50.00</p>
                 <h3 class="cart-total">Total: $<span id="total-price">0.00</span></h3>
+                <small>*El total puede variar según la opción de entrega elegida.</small>
             </div>
+
             <div class="customer-info">
                 <h4>Datos de Envío</h4>
                 <input type="text" id="customer-name" placeholder="Nombre completo" required>
@@ -69,10 +81,10 @@
     <div id="contact-modal" class="zoom-modal hidden" onclick="closeContact()">
         <div class="contact-card" onclick="event.stopPropagation()">
             <span class="close-btn" onclick="closeContact()" style="color:#333; float:right;">&times;</span>
-            <h3 style="color:#d4af37; text-transform:uppercase;">Contacto</h3>
-            <p><strong>Mauro Gutierrez</strong></p>
-            <p>📱 Whatsapp: <a href="https://wa.me/529813493773" target="_blank" style="color:#25d366; text-decoration:none; font-weight:bold;">9813493773</a></p>
-            <p>📍 San Francisco de Campeche, Campeche, México.</p>
+            <h3>Información de Contacto</h3>
+            <p><strong>[Tu Nombre]</strong></p>
+            <p>📱 Whatsapp: <a href="https://wa.me/[TuNúmero]" target="_blank" style="color:#25d366; text-decoration:none; font-weight:bold;">[TuNúmero]</a></p>
+            <p>📍 [Tu Ubicación]</p>
         </div>
     </div>
 
