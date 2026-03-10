@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> CreandoPulseras | Tienda Oficial</title>
+    <title>CreandoPulseras | Tienda Oficial</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="qr-container">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://vbmauro.github.io/CreandoPulseras/&color=6f4e37" alt="QR Tienda">
+        <span>Escanea y Comparte</span>
+    </div>
+
     <header>
         <div class="cart-icon" onclick="toggleCart()">
             🛒 Mi Carrito (<span id="cart-count">0</span>)
@@ -14,11 +19,11 @@
     </header>
 
     <section class="hero">
-        <img src="https://i.postimg.cc/Z5T3mcHk/Bio.png" alt="Presentación">
+        <img src="https://i.postimg.cc/Z5T3mcHk/Bio.png" alt="Presentación CreandoPulseras">
     </section>
 
     <main>
-        <h2> Nuestra Colección </h2>
+        <h2>Nuestras Colecciones</h2>
         <div class="products-grid" id="products-container"></div>
         
         <footer class="site-footer">
@@ -26,11 +31,11 @@
                 <p class="trust-text">
                     "En <strong>CreandoPulseras</strong>, armamos con Amor y con la certeza de hacer cosas bellas para ti. 
                     Usamos productos de la mejor calidad para obtener un resultado hermoso y que luzcas de maravilla; 
-                    <strong>jamás usamos plástico ni acrílico</strong>, usamos perla cultivada, acero dorado, chapa de oro de 18k, piedras naturales 
-                    y cristales de la mejor calidad... Gracias por visitarnos, te aseguro que quedarás complacida."
+                    <strong>jamás usamos plástico ni acrílico</strong>, usamos perla cultivada, acero dorado, piedras naturales 
+                    y cristales de la mejor calidad. Gracias por visitarnos, te aseguro que quedarás complacida."
                 </p>
                 <div class="footer-bottom">
-                    <span class="signature"> By Mauro Gutierrez </span>
+                    <span class="signature">By Mauro Gutierrez</span>
                     <div class="footer-stats">
                         <span id="visit-counter" class="visit-counter">Visitas: ...</span>
                         <a href="javascript:void(0)" class="contact-link" onclick="openContact()">CONTACTO</a>
@@ -49,7 +54,7 @@
             <div class="shipping-note">
                 <h4>🚚 Opciones de Entrega</h4>
                 <ul>
-                    <li><strong>Fuera de la ciudad:</strong> Envío por MEXPOST ($50.00).</li>
+                    <li><strong>Fuera de Campeche:</strong> Envío por MEXPOST ($50.00).</li>
                     <li><strong>En la ciudad:</strong> Entrega a domicilio (Gratis según distancia).</li>
                     <li><strong>Mandaditos:</strong> Costo según distancia (a cargo del comprador).</li>
                 </ul>
@@ -81,16 +86,13 @@
     <div id="contact-modal" class="zoom-modal hidden" onclick="closeContact()">
         <div class="contact-card" onclick="event.stopPropagation()">
             <span class="close-btn" onclick="closeContact()" style="color:#333; float:right;">&times;</span>
-            <h3>Información de Contacto</h3>
-            <p><strong> Mauro Gutierrez Zuñiga</strong></p>
-            <p>📱 Whatsapp: <a href="https://wa.me/529813493773" target="_blank" style="color:#25d366; text-decoration:none; font-weight:bold;">529813493773</a></p>
-            <p>📍 San Francisco de Campeche </p>
+            <h3 style="color:#d4af37; text-transform:uppercase;">Contacto</h3>
+            <p><strong>Mauro Gutierrez</strong></p>
+            <p>📱 Whatsapp: <a href="https://wa.me/529813493773" target="_blank" style="color:#25d366; text-decoration:none; font-weight:bold;">9813493773</a></p>
+            <p>📍 San Francisco de Campeche, Campeche, México.</p>
         </div>
     </div>
 
     <script src="app.js"></script>
 </body>
-
 </html>
-
-

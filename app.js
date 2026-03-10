@@ -16,7 +16,7 @@ async function loadProducts() {
         renderProducts();
         if (visitCounter) visitCounter.innerText = `Visitas: ${data.visitas}`;
     } catch (error) {
-        container.innerHTML = '<p>Error de conexión.</p>';
+        container.innerHTML = '<p>Error de conexión con el catálogo.</p>';
     }
 }
 
@@ -68,7 +68,7 @@ function updateCartUI() {
     });
     document.getElementById('cart-count').innerText = totalQty;
     document.getElementById('subtotal-price').innerText = sub.toFixed(2);
-    document.getElementById('total-price').innerText = cart.length > 0 ? (sub + 50).toFixed(2) : "0.00";
+    document.getElementById('total-price').innerText = cart.length > 0 ? (subtotal + 50).toFixed(2) : "0.00";
 }
 
 function checkout() {
@@ -85,7 +85,7 @@ function checkout() {
     fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: formData });
 
     const miWA = "529813493773";
-    let msg = `¡Hola! Confirmo mi pedido:\n\n`;
+    let msg = `¡Hola CreandoPulseras! ✨ Confirmo pedido:\n\n`;
     let sub = 0;
     cart.forEach(i => {
         msg += `▪️ ${i.cantidad}x SKU: ${i.sku} ($${(i.price * i.cantidad).toFixed(2)})\n`;
@@ -100,6 +100,5 @@ function openZoom(src) { document.getElementById('zoomed-img').src = src; docume
 function closeZoom() { document.getElementById('zoom-modal').classList.add('hidden'); }
 function openContact() { document.getElementById('contact-modal').classList.remove('hidden'); }
 function closeContact() { document.getElementById('contact-modal').classList.add('hidden'); }
-
 
 loadProducts();
