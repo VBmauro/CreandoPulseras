@@ -1,4 +1,4 @@
-const SCRIPT_URL = "TU_URL_DE_GOOGLE_SCRIPT";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxihChz7LBFhsbTyvdCoInpkdLnAmtFj3NMxJ6GzkVaHR6Chgz5yjmTgcGfd5amD-6wJQ/exec";
 
 let products = [];
 let cart = [];
@@ -84,7 +84,7 @@ function checkout() {
     formData.append('cart', JSON.stringify(cart));
     fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: formData });
 
-    const miWA = "[TuNúmero]";
+    const miWA = "529813493773";
     let msg = `¡Hola! Confirmo mi pedido:\n\n`;
     let sub = 0;
     cart.forEach(i => {
@@ -100,5 +100,6 @@ function openZoom(src) { document.getElementById('zoomed-img').src = src; docume
 function closeZoom() { document.getElementById('zoom-modal').classList.add('hidden'); }
 function openContact() { document.getElementById('contact-modal').classList.remove('hidden'); }
 function closeContact() { document.getElementById('contact-modal').classList.add('hidden'); }
+
 
 loadProducts();
