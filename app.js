@@ -1,24 +1,14 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby2jrESaW8IuOC31K6AyGkYvYMebB4IL5yArvYkr8pfd12QH7GeSD6crUrmUiIY7fR_6A/exec";
+const SCRIPT_URL = "TU_URL_DE_GOOGLE_SCRIPT";
 
 let products = [];
 let cart = [];
-
-// LISTA DE COLORES PASTEL SELECCIONADOS
-const pastelColors = [
-    '#FFF0F5', // Rosa suave (LavenderBlush)
-    '#FFFDE7', // Amarillo crema
-    '#E1F5FE', // Azul cielo claro
-    '#FFF3E0', // Naranja melocotón muy bajo
-    '#F3E5F5', // Morado lavanda
-    '#F1F8E9'  // Verde menta pálido
-];
+const pastelColors = ['#FFF0F5', '#FFFDE7', '#E1F5FE', '#FFF3E0', '#F3E5F5', '#F1F8E9'];
 
 async function loadProducts() {
     const container = document.getElementById('products-container');
     const visitCounter = document.getElementById('visit-counter');
     if (!container) return; 
     container.innerHTML = '<p style="text-align:center; width:100%;">Abriendo el joyero...</p>';
-    
     try {
         const response = await fetch(SCRIPT_URL);
         const data = await response.json();
@@ -26,22 +16,18 @@ async function loadProducts() {
         renderProducts();
         if (visitCounter) visitCounter.innerText = `Visitas: ${data.visitas}`;
     } catch (error) {
-        container.innerHTML = '<p>Error de conexión con el catálogo.</p>';
+        container.innerHTML = '<p>Error de conexión.</p>';
     }
 }
 
 function renderProducts() {
     const container = document.getElementById('products-container');
     container.innerHTML = '';
-    
     products.forEach(product => {
-        // Seleccionar un color pastel aleatorio para cada recuadro
         const randomColor = pastelColors[Math.floor(Math.random() * pastelColors.length)];
-        
         const card = document.createElement('div');
         card.className = 'product-card';
-        card.style.backgroundColor = randomColor; // Aplicar color pastel
-        
+        card.style.backgroundColor = randomColor;
         card.innerHTML = `
             <img src="${product.image}" onclick="openZoom(this.src)">
             <h3>SKU: ${product.sku}</h3>
@@ -98,8 +84,8 @@ function checkout() {
     formData.append('cart', JSON.stringify(cart));
     fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: formData });
 
-    const miWA = "529813493773";
-    let msg = `¡Hola! Confirmo pedido:\n\n`;
+    const miWA = "[TuNúmero]";
+    let msg = `¡Hola! Confirmo mi pedido:\n\n`;
     let sub = 0;
     cart.forEach(i => {
         msg += `▪️ ${i.cantidad}x SKU: ${i.sku} ($${(i.price * i.cantidad).toFixed(2)})\n`;
