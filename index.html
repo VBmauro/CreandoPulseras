@@ -23,6 +23,10 @@
     </section>
 
     <main>
+        <div style="text-align: center; margin: 30px 0;">
+            <button class="btn-armar" onclick="openCustomizer()">✨ Arma tu Pulsera</button>
+        </div>
+
         <h2>Nuestras Colecciones</h2>
         <div class="products-grid" id="products-container"></div>
         
@@ -90,6 +94,57 @@
             <p><strong>Mauro Gutierrez</strong></p>
             <p>📱 Whatsapp: <a href="https://wa.me/529813493773" target="_blank" style="color:#25d366; text-decoration:none; font-weight:bold;">9813493773</a></p>
             <p>📍 San Francisco de Campeche, Campeche, México.</p>
+        </div>
+    </div>
+
+    <div id="custom-modal" class="zoom-modal hidden" onclick="closeCustomizer()">
+        <div class="contact-card customizer-card" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="closeCustomizer()" style="color:#333; float:right; font-size:24px;">&times;</span>
+            <h3 style="color:#d4af37; text-transform:uppercase; margin-bottom: 5px;">Diseña tu Pulsera</h3>
+            <p style="font-size: 14px; color: #666; margin-bottom: 20px;">Personaliza cada detalle a tu gusto.</p>
+
+            <div class="custom-section">
+                <h4>1. Color del Cristal (Elige tus favoritos)</h4>
+                <div class="checkbox-grid">
+                    <label><input type="checkbox" name="cristal" value="Rojo"> Rojo</label>
+                    <label><input type="checkbox" name="cristal" value="Verde"> Verde</label>
+                    <label><input type="checkbox" name="cristal" value="Amarillo"> Amarillo</label>
+                    <label><input type="checkbox" name="cristal" value="Naranja"> Naranja</label>
+                    <label><input type="checkbox" name="cristal" value="Morado"> Morado</label>
+                    <label><input type="checkbox" name="cristal" value="Rosa"> Rosa</label>
+                    <label><input type="checkbox" name="cristal" value="Café"> Café</label>
+                    <label><input type="checkbox" name="cristal" value="Negro"> Negro</label>
+                    <label><input type="checkbox" name="cristal" value="Azul"> Azul</label>
+                    <label><input type="checkbox" name="cristal" value="Transparente"> Transparente</label>
+                    <label><input type="checkbox" name="cristal" value="Multicolor"> Multicolor</label>
+                </div>
+            </div>
+
+            <div class="custom-section">
+                <h4>2. Colores de la Pulsera</h4>
+                
+                <p class="palette-label">Color Base:</p>
+                <div class="color-palette" id="palette-base">
+                    <div class="color-circle" style="background: #e74c3c;" onclick="selectColor('base', 'Rojo', this)"></div>
+                    <div class="color-circle" style="background: #3498db;" onclick="selectColor('base', 'Azul', this)"></div>
+                    <div class="color-circle" style="background: #f1c40f;" onclick="selectColor('base', 'Amarillo', this)"></div>
+                    <div class="color-circle" style="background: #2ecc71;" onclick="selectColor('base', 'Verde', this)"></div>
+                    <div class="color-circle" style="background: #000000;" onclick="selectColor('base', 'Negro', this)"></div>
+                    <div class="color-circle" style="background: #ffffff; border: 1px solid #ddd;" onclick="selectColor('base', 'Blanco', this)"></div>
+                </div>
+
+                <p class="palette-label">Color Secundario:</p>
+                <div class="color-palette" id="palette-sec">
+                    <div class="color-circle" style="background: #e74c3c;" onclick="selectColor('sec', 'Rojo', this)"></div>
+                    <div class="color-circle" style="background: #3498db;" onclick="selectColor('sec', 'Azul', this)"></div>
+                    <div class="color-circle" style="background: #f1c40f;" onclick="selectColor('sec', 'Amarillo', this)"></div>
+                    <div class="color-circle" style="background: #2ecc71;" onclick="selectColor('sec', 'Verde', this)"></div>
+                    <div class="color-circle" style="background: #000000;" onclick="selectColor('sec', 'Negro', this)"></div>
+                    <div class="color-circle" style="background: #ffffff; border: 1px solid #ddd;" onclick="selectColor('sec', 'Blanco', this)"></div>
+                </div>
+            </div>
+
+            <button class="checkout-btn" style="margin-top: 20px;" onclick="addCustomBracelet()">Agregar al Carrito</button>
         </div>
     </div>
 
