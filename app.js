@@ -1,4 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxihChz7LBFhsbTyvdCoInpkdLnAmtFj3NMxJ6GzkVaHR6Chgz5yjmTgcGfd5amD-6wJQ/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxxBGxIt88o2gqqbamBVtDuWlQTkgchyOhk5VDKS2oDiea-VCGDi-BoXa2-h59rurHI/exec";
 
 let products = [];
 let cart = [];
@@ -68,8 +68,7 @@ function updateCartUI() {
     });
     document.getElementById('cart-count').innerText = totalQty;
     document.getElementById('subtotal-price').innerText = sub.toFixed(2);
-    // Corrección aquí: se usaba "subtotal" que no estaba definida, lo cambié por "sub"
-    document.getElementById('total-price').innerText = cart.length > 0 ? (sub + 50).toFixed(2) : "0.00";
+    document.getElementById('total-price').innerText = cart.length > 0 ? (subtotal + 50).toFixed(2) : "0.00";
 }
 
 function checkout() {
@@ -101,51 +100,5 @@ function openZoom(src) { document.getElementById('zoomed-img').src = src; docume
 function closeZoom() { document.getElementById('zoom-modal').classList.add('hidden'); }
 function openContact() { document.getElementById('contact-modal').classList.remove('hidden'); }
 function closeContact() { document.getElementById('contact-modal').classList.add('hidden'); }
-
-// --- LÓGICA NUEVA: ARMAR PULSERA ---
-let customSelections = { base: '', sec: '' };
-
-function openCustomizer() { 
-    document.getElementById('custom-modal').classList.remove('hidden'); 
-}
-
-function closeCustomizer() { 
-    document.getElementById('custom-modal').classList.add('hidden'); 
-}
-
-function selectColor(type, colorName, element) {
-    customSelections[type] = colorName;
-    const siblings = element.parentElement.querySelectorAll('.color-circle');
-    siblings.forEach(el => el.classList.remove('selected'));
-    element.classList.add('selected');
-}
-
-function addCustomBracelet() {
-    const cristales = Array.from(document.querySelectorAll('input[name="cristal"]:checked')).map(cb => cb.value);
-    
-    if (cristales.length === 0) return alert("Por favor, selecciona al menos un color de cristal.");
-    if (!customSelections.base || !customSelections.sec) return alert("Por favor, selecciona los 2 colores de la pulsera.");
-
-    const customSKU = `Personalizada - Cristales: ${cristales.join(', ')} | Colores: ${customSelections.base} y ${customSelections.sec}`;
-    
-    const customProduct = {
-        sku: "Diseño Propio",
-        description: customSKU,
-        price: 250, // PRECIO ACTUALIZADO
-        image: "https://i.postimg.cc/Z5T3mcHk/Bio.png", 
-        cantidad: 1
-    };
-
-    cart.push(customProduct);
-    updateCartUI();
-    closeCustomizer();
-    
-    // Limpiar formulario
-    document.querySelectorAll('input[name="cristal"]').forEach(cb => cb.checked = false);
-    document.querySelectorAll('.color-circle').forEach(el => el.classList.remove('selected'));
-    customSelections = { base: '', sec: '' };
-    
-    alert("¡Tu diseño único se ha añadido al carrito por $250.00 MXN! ✨");
-}
 
 loadProducts();
