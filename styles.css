@@ -2,49 +2,49 @@
 
 body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
 
-/* QR FLOTANTE (SUPERIOR IZQUIERDA) */
+/* QR FLOTANTE */
 .qr-container {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 1000;
-    background: white;
-    padding: 8px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    text-align: center;
+    position: fixed; top: 20px; left: 20px; z-index: 1000;
+    background: white; padding: 8px; border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center;
     transition: transform 0.3s ease;
 }
-
 .qr-container:hover { transform: scale(1.1); }
+.qr-container img { width: 60px; height: 60px; display: block; }
+.qr-container span { font-size: 8px; color: var(--cafe); text-transform: uppercase; font-weight: bold; display: block; margin-top: 4px; }
 
-.qr-container img {
-    width: 60px; /* Tamaño sutil */
-    height: 60px;
-    display: block;
+/* LOGO GIRATORIO PEQUEÑO */
+.mini-logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
 }
 
-.qr-container span {
-    font-size: 8px;
-    color: var(--cafe);
-    text-transform: uppercase;
-    font-weight: bold;
-    display: block;
-    margin-top: 4px;
+.wa-spin-mini {
+    width: 56px !important; /* Fuerza el tamaño exacto a 1.5 cm */
+    height: 56px !important; /* Fuerza el tamaño exacto a 1.5 cm */
+    border-radius: 50%;
+    animation: spinMini 20s linear infinite; /* Giro lento */
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    cursor: pointer;
 }
 
-/* CARRITO FLOTANTE */
-.cart-icon {
-    position: fixed; top: 20px; right: 20px; background: white;
-    padding: 12px 22px; border-radius: 50px; z-index: 1000;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15); cursor: pointer; font-weight: bold;
-    display: flex; align-items: center; gap: 8px; border: 1px solid #eee;
+.wa-spin-mini:hover {
+    transform: scale(1.1);
+    animation-play-state: paused; /* Se detiene al pasar el mouse para hacer clic fácil */
+}
+
+@keyframes spinMini {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 /* PORTADA Y FONDO */
 .hero img { width: 100%; height: auto; display: block; }
 main { background-image: url('https://i.postimg.cc/nLD4zLyx/Fondo.png'); background-repeat: repeat; background-attachment: fixed; }
-main h2 { text-align: center; padding: 60px 0 20px; color: var(--accent); letter-spacing: 3px; text-transform: uppercase; font-weight: 300; }
+main h2 { text-align: center; padding: 20px 0 20px; color: var(--accent); letter-spacing: 3px; text-transform: uppercase; font-weight: 300; }
 
 /* PRODUCTOS */
 .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 40px; padding: 40px; max-width: 1200px; margin: 0 auto; }
@@ -52,35 +52,25 @@ main h2 { text-align: center; padding: 60px 0 20px; color: var(--accent); letter
 .product-card:hover { transform: translateY(-10px); }
 .product-card img { width: 100%; border-radius: 10px; cursor: zoom-in; }
 
-/* NOTA DE ENVÍO AZUL */
-.shipping-note { background-color: #e3f2fd; border-left: 5px solid #2196f3; padding: 15px; margin: 20px 0; border-radius: 8px; text-align: left; }
-.shipping-note h4 { margin: 0 0 10px 0; color: #0d47a1; font-size: 16px; }
-.shipping-note ul { margin: 0; padding-left: 20px; list-style: disc; font-size: 14px; color: #1565c0; }
-
 /* FOOTER */
 .site-footer { padding: 60px 20px; background: rgba(255,255,255,0.5); backdrop-filter: blur(8px); margin-top: 50px; border-top: 1px solid rgba(212,175,55,0.2); }
 .footer-content { max-width: 850px; margin: 0 auto; text-align: center; }
 .trust-text { font-style: italic; line-height: 1.8; color: #444; font-size: 17px; }
 .footer-bottom { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; border-top: 1px solid #ddd; padding-top: 20px; }
-.signature { font-family: serif; font-size: 24px; color: var(--accent); }
+.signature { font-family: serif; font-size: 24px; }
 .footer-stats { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
 .visit-counter { font-size: 12px; color: #777; letter-spacing: 1px; text-transform: uppercase; }
 .contact-link { color: var(--accent); text-decoration: none; font-weight: bold; letter-spacing: 1px; font-size: 14px; }
 
 /* MODALES */
 .hidden { display: none !important; }
-.cart-modal, .zoom-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; display: flex; justify-content: center; align-items: center; }
-.cart-content { background: white; width: 90%; max-width: 420px; height: 100%; position: absolute; right: 0; padding: 40px; overflow-y: auto; box-sizing: border-box; }
+.zoom-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; display: flex; justify-content: center; align-items: center; }
 .contact-card { background: white; padding: 40px; border-radius: 20px; text-align: center; position: relative; width: 90%; max-width: 380px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-
-/* BOTONES */
-.qty-input { width: 55px; padding: 8px; text-align: center; border-radius: 5px; border: 1px solid #ddd; }
-.add-to-cart-container { display: flex; gap: 10px; margin-top: 15px; }
-.add-to-cart-container button { flex-grow: 1; background: var(--text); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
-.checkout-btn { width: 100%; background: #25d366; color: white; border: none; padding: 18px; border-radius: 10px; font-weight: bold; font-size: 17px; cursor: pointer; margin-top: 25px; }
 #zoomed-img { max-width: 90%; max-height: 90%; border-radius: 10px; }
+.close-zoom, .close-btn { cursor: pointer; font-size: 24px; font-weight: bold; }
+.close-zoom { position: absolute; top: 20px; right: 30px; color: white; }
 
-/* Responsive para el QR en celulares */
+/* Responsive */
 @media (max-width: 600px) {
     .qr-container { top: 10px; left: 10px; padding: 5px; }
     .qr-container img { width: 45px; height: 45px; }
