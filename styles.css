@@ -2,7 +2,7 @@
 
 body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
 
-/* QR FLOTANTE */
+/* QR FLOTANTE (SUPERIOR IZQUIERDA) */
 .qr-container {
     position: fixed; top: 20px; left: 20px; z-index: 1000;
     background: white; padding: 8px; border-radius: 10px;
@@ -13,46 +13,73 @@ body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 0; 
 .qr-container img { width: 60px; height: 60px; display: block; }
 .qr-container span { font-size: 8px; color: var(--cafe); text-transform: uppercase; font-weight: bold; display: block; margin-top: 4px; }
 
-/* LOGO GIRATORIO PEQUEÑO */
-.mini-logo-container {
+/* Contenedor del título y el logo de WA purificado */
+.collection-title-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 30px;
+    gap: 20px;
+    padding: 40px 20px 10px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
+/* Reestilizar el título original purificado */
+.collection-title-container h2 { 
+    text-align: center; 
+    margin: 0; 
+    color: var(--accent); 
+    letter-spacing: 3px; 
+    text-transform: uppercase; 
+    font-weight: 300; 
+    font-size: 1.5rem;
+}
+
+/* Botón de WA en la colección purificado */
+.collection-wa-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 56px; 
+    height: 56px;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+/* Imagen del logo giratorio LOGICO (Giro en sentido horario) */
 .wa-spin-mini {
     width: 56px !important; /* Fuerza el tamaño exacto a 1.5 cm */
     height: 56px !important; /* Fuerza el tamaño exacto a 1.5 cm */
     border-radius: 50%;
-    animation: spinMini 20s linear infinite; /* Giro lento */
+    background-color: white; /* Fondo blanco para que el logo resalte */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2); /* Sombra elegante */
+    animation: spinMini 25s linear infinite; /* Giro suave y lento */
     object-fit: contain;
     transition: transform 0.3s ease;
-    cursor: pointer;
 }
 
 .wa-spin-mini:hover {
     transform: scale(1.1);
-    animation-play-state: paused; /* Se detiene al pasar el mouse para hacer clic fácil */
+    animation-play-state: paused;
 }
 
 @keyframes spinMini {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); } /* Giro LÓGICO en sentido de las agujas del reloj */
 }
 
 /* PORTADA Y FONDO */
 .hero img { width: 100%; height: auto; display: block; }
 main { background-image: url('https://i.postimg.cc/nLD4zLyx/Fondo.png'); background-repeat: repeat; background-attachment: fixed; }
-main h2 { text-align: center; padding: 20px 0 20px; color: var(--accent); letter-spacing: 3px; text-transform: uppercase; font-weight: 300; }
 
-/* PRODUCTOS */
+/* PRODUCTOS purificados (sin botones de carrito) */
 .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 40px; padding: 40px; max-width: 1200px; margin: 0 auto; }
 .product-card { padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.06); transition: transform 0.3s ease; border: 1px solid rgba(255,255,255,0.3); }
 .product-card:hover { transform: translateY(-10px); }
 .product-card img { width: 100%; border-radius: 10px; cursor: zoom-in; }
 
-/* FOOTER */
+/* FOOTER purificado */
 .site-footer { padding: 60px 20px; background: rgba(255,255,255,0.5); backdrop-filter: blur(8px); margin-top: 50px; border-top: 1px solid rgba(212,175,55,0.2); }
 .footer-content { max-width: 850px; margin: 0 auto; text-align: center; }
 .trust-text { font-style: italic; line-height: 1.8; color: #444; font-size: 17px; }
@@ -69,6 +96,13 @@ main h2 { text-align: center; padding: 20px 0 20px; color: var(--accent); letter
 #zoomed-img { max-width: 90%; max-height: 90%; border-radius: 10px; }
 .close-zoom, .close-btn { cursor: pointer; font-size: 24px; font-weight: bold; }
 .close-zoom { position: absolute; top: 20px; right: 30px; color: white; }
+
+/* ICONO MINI WHATSAPP purificado */
+.wa-icon-mini {
+    width: 20px; height: 20px;
+    display: inline-block; vertical-align: middle;
+    margin-right: 5px; mix-blend-mode: multiply; 
+}
 
 /* Responsive */
 @media (max-width: 600px) {
