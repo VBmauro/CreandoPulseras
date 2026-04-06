@@ -1,6 +1,6 @@
 /* Definición de Variables y Tipografía */
 :root { 
-    --accent: #d4af37; /* Dorado */
+    --accent: #d4af37; 
     --text: #333; 
     --cafe: #6f4e37; 
     --wa-green: #25d366; 
@@ -32,7 +32,7 @@ main {
     padding-bottom: 50px;
 }
 
-/* SECCIÓN: Invitación a la Orden (EMOTIVA Y PROFESIONAL) */
+/* SECCIÓN: Invitación a la Orden */
 .order-invitation {
     padding: 60px 20px 20px;
     display: flex;
@@ -68,26 +68,39 @@ main {
 
 .action-area {
     margin-top: 30px; border-top: 1px solid #eee; padding-top: 25px;
-    display: flex; flex-direction: column; align-items: center; gap: 15px;
+    display: flex; flex-direction: column; align-items: center; gap: 20px;
 }
 
-.action-area span { font-size: 13px; color: #777; max-width: 400px; }
+.action-area span { font-size: 14px; color: #777; max-width: 450px; font-weight: bold; }
 
-.wa-order-btn {
+/* NUEVO BOTÓN: Logo Giratorio Central */
+.spinning-logo-btn {
     display: inline-block;
-    background-color: var(--wa-green);
-    color: white; text-decoration: none;
-    padding: 15px 35px; border-radius: 50px;
-    font-weight: bold; font-size: 16px;
-    text-transform: uppercase; letter-spacing: 1px;
-    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
-    transition: all 0.3s ease;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    background-color: transparent; /* Fondo transparente */
 }
 
-.wa-order-btn:hover {
-    background-color: var(--wa-dark-green);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+.spinning-logo-btn img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    animation: spin 15s linear infinite; /* Giro infinito de 15 segundos */
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.spinning-logo-btn:hover {
+    transform: scale(1.1); /* Efecto zoom al acercar el mouse */
+}
+.spinning-logo-btn:hover img {
+    animation-play-state: paused; /* Pausa el giro al hacer hover */
 }
 
 /* Título de la colección */
@@ -120,15 +133,11 @@ main h2 {
 .close-zoom, .close-btn { cursor: pointer; font-size: 24px; font-weight: bold; }
 .close-zoom { position: absolute; top: 20px; right: 30px; color: white; }
 
-/* ESTILOS ESPECÍFICOS PARA EL ICONO DE WHATSAPP (Añadido) */
+/* ICONO MINI WHATSAPP */
 .wa-icon-mini {
-    width: 20px; /* Tamaño miniatura para alinear con texto (aprox 0.5cm) */
-    height: 20px;
-    display: inline-block;
-    vertical-align: middle; /* Alineación vertical con el texto */
-    margin-right: 5px; /* Espacio con el texto 'WhatsApp:' */
-    /* Truco para simular transparencia en JPEG con fondo blanco sobre fondo blanco: */
-    mix-blend-mode: multiply; 
+    width: 20px; height: 20px;
+    display: inline-block; vertical-align: middle;
+    margin-right: 5px; mix-blend-mode: multiply; 
 }
 
 /* Responsive */
@@ -143,5 +152,5 @@ main h2 {
     .order-invitation { padding-top: 40px; }
     .invitation-card { padding: 25px; }
     .invitation-card h2 { font-size: 1.6rem; }
-    .wa-order-btn { padding: 12px 25px; font-size: 14px; }
+    .spinning-logo-btn { width: 90px; height: 90px; } /* Logo un poco más pequeño en móvil */
 }
