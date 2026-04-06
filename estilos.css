@@ -1,18 +1,8 @@
-/* Definición de Variables y Tipografía */
-:root { 
-    --accent: #d4af37; 
-    --text: #333; 
-    --cafe: #6f4e37; 
-    --wa-green: #25d366; 
-    --wa-dark-green: #1da851;
-    --card-bg: rgba(255, 255, 255, 0.9);
-    --font-elegant: 'Playfair Display', serif; 
-    --font-main: 'Helvetica Neue', Arial, sans-serif;
-}
+:root { --accent: #d4af37; --text: #333; --cafe: #6f4e37; }
 
-body { font-family: var(--font-main); margin: 0; padding: 0; overflow-x: hidden; color: var(--text); }
+body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
 
-/* QR FLOTANTE (Superior Izquierda) */
+/* QR FLOTANTE (SUPERIOR IZQUIERDA) */
 .qr-container {
     position: fixed; top: 20px; left: 20px; z-index: 1000;
     background: white; padding: 8px; border-radius: 10px;
@@ -23,58 +13,37 @@ body { font-family: var(--font-main); margin: 0; padding: 0; overflow-x: hidden;
 .qr-container img { width: 60px; height: 60px; display: block; }
 .qr-container span { font-size: 8px; color: var(--cafe); text-transform: uppercase; font-weight: bold; display: block; margin-top: 4px; }
 
-/* PORTADA Y FONDO */
-.hero img { width: 100%; height: auto; display: block; }
-main { 
-    background-image: url('https://i.postimg.cc/nLD4zLyx/Fondo.png'); 
-    background-repeat: repeat; 
-    background-attachment: fixed; 
-    padding-bottom: 50px;
-}
-
-/* SECCIÓN: Logo Pequeño Centrado */
-.order-invitation {
-    padding: 30px 20px 0px;
+/* LOGO GIRATORIO PEQUEÑO */
+.mini-logo-container {
     display: flex;
     justify-content: center;
-    width: 100%;
+    align-items: center;
+    margin-top: 30px;
 }
 
-/* BOTÓN: Logo Giratorio Central Pequeño (1.5 cm = ~56px) */
-.spinning-logo-btn {
-    display: inline-block;
-    width: 56px; 
-    height: 56px;
+.wa-spin-mini {
+    width: 56px !important; /* Fuerza el tamaño exacto a 1.5 cm */
+    height: 56px !important; /* Fuerza el tamaño exacto a 1.5 cm */
     border-radius: 50%;
+    animation: spinMini 20s linear infinite; /* Giro lento */
+    object-fit: contain;
     transition: transform 0.3s ease;
-    cursor: pointer;
-    background-color: transparent;
 }
 
-.spinning-logo-btn img {
-    width: 100%;
-    height: auto;
-    border-radius: 50%;
-    animation: spin 25s linear infinite; /* Giro lento de 25 segundos */
+.wa-spin-mini:hover {
+    transform: scale(1.1);
+    animation-play-state: paused; /* Se detiene al pasar el mouse para hacer clic fácil */
 }
 
-@keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+@keyframes spinMini {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
-.spinning-logo-btn:hover {
-    transform: scale(1.1); 
-}
-.spinning-logo-btn:hover img {
-    animation-play-state: paused;
-}
-
-/* Título de la colección */
-main h2 { 
-    text-align: center; padding: 20px 0 10px; color: var(--accent); 
-    letter-spacing: 3px; text-transform: uppercase; font-weight: 300; font-size: 1.5rem;
-}
+/* PORTADA Y FONDO */
+.hero img { width: 100%; height: auto; display: block; }
+main { background-image: url('https://i.postimg.cc/nLD4zLyx/Fondo.png'); background-repeat: repeat; background-attachment: fixed; }
+main h2 { text-align: center; padding: 20px 0 20px; color: var(--accent); letter-spacing: 3px; text-transform: uppercase; font-weight: 300; }
 
 /* PRODUCTOS */
 .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 40px; padding: 40px; max-width: 1200px; margin: 0 auto; }
