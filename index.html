@@ -12,12 +12,6 @@
         <span>Escanea y Comparte</span>
     </div>
 
-    <header>
-        <div class="cart-icon" onclick="toggleCart()">
-            🛒 Mi Carrito (<span id="cart-count">0</span>)
-        </div>
-    </header>
-
     <section class="hero">
         <img src="https://i.postimg.cc/Z5T3mcHk/Bio.png" alt="Presentación CreandoPulseras">
     </section>
@@ -44,39 +38,6 @@
             </div>
         </footer>
     </main>
-
-    <div id="cart-modal" class="cart-modal hidden">
-        <div class="cart-content">
-            <span class="close-btn" onclick="toggleCart()">&times;</span>
-            <h3>Tu Carrito</h3>
-            <div id="cart-items"></div>
-
-            <div class="shipping-note">
-                <h4>🚚 Opciones de Entrega</h4>
-                <ul>
-                    <li><strong>Fuera de Campeche:</strong> Envío por MEXPOST ($50.00).</li>
-                    <li><strong>En la ciudad:</strong> Entrega a domicilio (Gratis según distancia).</li>
-                    <li><strong>Mandaditos:</strong> Costo según distancia (a cargo del comprador).</li>
-                </ul>
-            </div>
-            
-            <div class="cart-summary">
-                <p>Subtotal: $<span id="subtotal-price">0.00</span></p>
-                <p>Envío base (MEXPOST): $50.00</p>
-                <h3 class="cart-total">Total: $<span id="total-price">0.00</span></h3>
-                <small>*El total puede variar según la opción de entrega elegida.</small>
-            </div>
-
-            <div class="customer-info">
-                <h4>Datos de Envío</h4>
-                <input type="text" id="customer-name" placeholder="Nombre completo" required>
-                <input type="tel" id="customer-phone" placeholder="Teléfono" required>
-                <input type="text" id="customer-cp" placeholder="Código Postal (C.P.)" required>
-                <textarea id="customer-address" placeholder="Calle, Número, Colonia, Ciudad y Estado"></textarea>
-            </div>
-            <button class="checkout-btn" onclick="checkout()">Proceder al Pago</button>
-        </div>
-    </div>
 
     <div id="zoom-modal" class="zoom-modal hidden" onclick="closeZoom()">
         <span class="close-zoom">&times;</span>
