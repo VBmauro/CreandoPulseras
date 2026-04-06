@@ -1,8 +1,18 @@
-:root { --accent: #d4af37; --text: #333; --cafe: #6f4e37; --wa-green: #25d366; }
+/* Definición de Variables y Tipografía */
+:root { 
+    --accent: #d4af37; /* Dorado */
+    --text: #333; 
+    --cafe: #6f4e37; 
+    --wa-green: #25d366; 
+    --wa-dark-green: #1da851;
+    --card-bg: rgba(255, 255, 255, 0.9);
+    --font-elegant: 'Playfair Display', serif; /* Fuente para momentos "llegadores" */
+    --font-main: 'Helvetica Neue', Arial, sans-serif;
+}
 
-body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
+body { font-family: var(--font-main); margin: 0; padding: 0; overflow-x: hidden; color: var(--text); }
 
-/* QR FLOTANTE */
+/* QR FLOTANTE (Superior Izquierda) */
 .qr-container {
     position: fixed; top: 20px; left: 20px; z-index: 1000;
     background: white; padding: 8px; border-radius: 10px;
@@ -15,26 +25,117 @@ body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 0; 
 
 /* PORTADA Y FONDO */
 .hero img { width: 100%; height: auto; display: block; }
-main { background-image: url('https://i.postimg.cc/nLD4zLyx/Fondo.png'); background-repeat: repeat; background-attachment: fixed; }
+main { 
+    background-image: url('https://i.postimg.cc/nLD4zLyx/Fondo.png'); 
+    background-repeat: repeat; 
+    background-attachment: fixed; 
+    padding-bottom: 50px;
+}
 
-/* MENSAJE WHATSAPP ARRIBA DE LA COLECCIÓN */
-.whatsapp-sales-prompt {
-    text-align: right;
-    padding: 20px 40px 0;
-    font-size: 14px;
-    color: #666;
+/* =========================================
+   NUEVA SECCIÓN: Invitación a la Orden (EMOTIVA Y PROFESIONAL)
+   ========================================= */
+.order-invitation {
+    padding: 60px 20px 20px;
+    display: flex;
+    justify-content: center;
     max-width: 1200px;
     margin: 0 auto;
 }
-.whatsapp-sales-prompt a {
-    color: var(--wa-green);
-    text-decoration: none;
-    font-weight: bold;
-    text-transform: uppercase;
-    border-bottom: 1px solid var(--wa-green);
+
+.invitation-card {
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(111, 78, 55, 0.1); /* Sombra suave color café */
+    border: 1px solid rgba(212, 175, 55, 0.2); /* Borde dorado muy suave */
+    text-align: center;
+    max-width: 700px;
+    position: relative;
+    backdrop-filter: blur(5px);
 }
 
-main h2 { text-align: center; padding: 30px 0 20px; color: var(--accent); letter-spacing: 3px; text-transform: uppercase; font-weight: 300; }
+.invitation-icon {
+    font-size: 30px;
+    color: var(--accent);
+    margin-bottom: 15px;
+}
+
+/* Título con la fuente elegante */
+.invitation-card h2 {
+    font-family: var(--font-elegant);
+    color: var(--cafe);
+    font-style: italic;
+    font-weight: 700;
+    font-size: 2.2rem;
+    margin: 0 0 20px 0;
+    text-transform: none; /* Quitamos mayúsculas para suavizar */
+    letter-spacing: normal;
+}
+
+.invitation-card p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.emotive-text {
+    font-family: var(--font-elegant);
+    font-size: 1.4rem;
+    color: var(--accent);
+    font-weight: bold;
+    margin-top: 25px !important;
+}
+
+.action-area {
+    margin-top: 30px;
+    border-top: 1px solid #eee;
+    padding-top: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.action-area span {
+    font-size: 13px;
+    color: #777;
+    max-width: 400px;
+}
+
+/* BOTÓN DE WHATSAPP ESTILIZADO */
+.wa-order-btn {
+    display: inline-block;
+    background-color: var(--wa-green);
+    color: white;
+    text-decoration: none;
+    padding: 15px 35px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+    transition: all 0.3s ease;
+}
+
+.wa-order-btn:hover {
+    background-color: var(--wa-dark-green);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+}
+
+/* Título de la colección (reestilizado para contrastar) */
+main h2 { 
+    text-align: center; 
+    padding: 40px 0 10px; 
+    color: var(--accent); 
+    letter-spacing: 3px; 
+    text-transform: uppercase; 
+    font-weight: 300; 
+    font-size: 1.5rem;
+}
 
 /* PRODUCTOS */
 .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 40px; padding: 40px; max-width: 1200px; margin: 0 auto; }
@@ -61,8 +162,17 @@ main h2 { text-align: center; padding: 30px 0 20px; color: var(--accent); letter
 .close-zoom, .close-btn { cursor: pointer; font-size: 24px; font-weight: bold; }
 .close-zoom { position: absolute; top: 20px; right: 30px; color: white; }
 
+/* Responsive */
+@media (max-width: 768px) {
+    .invitation-card h2 { font-size: 1.8rem; }
+    .invitation-card p { font-size: 15px; }
+}
+
 @media (max-width: 600px) {
     .qr-container { top: 10px; left: 10px; padding: 5px; }
     .qr-container img { width: 45px; height: 45px; }
-    .whatsapp-sales-prompt { text-align: center; padding: 20px 20px 0; }
+    .order-invitation { padding-top: 40px; }
+    .invitation-card { padding: 25px; }
+    .invitation-card h2 { font-size: 1.6rem; }
+    .wa-order-btn { padding: 12px 25px; font-size: 14px; }
 }
