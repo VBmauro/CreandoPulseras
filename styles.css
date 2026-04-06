@@ -18,13 +18,12 @@ body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 0; 
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 50px; /* <-- AQUI ESTA LA MAGIA: Aumenté la separación de 20px a 50px */
     padding: 40px 20px 10px;
     max-width: 1200px;
     margin: 0 auto;
 }
 
-/* Reestilizar el título original purificado */
 .collection-title-container h2 { 
     text-align: center; 
     margin: 0; 
@@ -35,7 +34,6 @@ body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 0; 
     font-size: 1.5rem;
 }
 
-/* Botón de WA en la colección purificado */
 .collection-wa-btn {
     display: flex;
     justify-content: center;
@@ -45,35 +43,38 @@ body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 0; 
     border-radius: 50%;
     cursor: pointer;
     background-color: transparent;
+    perspective: 1000px; /* Le da profundidad al efecto 3D */
 }
 
-/* Imagen del logo giratorio LOGICO (Giro en sentido horario) */
+/* Imagen del logo giratorio ESTILO UNITY (Giro en eje Y como moneda) */
 .wa-spin-mini {
     width: 56px !important; /* Fuerza el tamaño exacto a 1.5 cm */
-    height: 56px !important; /* Fuerza el tamaño exacto a 1.5 cm */
+    height: 56px !important; 
     border-radius: 50%;
-    background-color: white; /* Fondo blanco para que el logo resalte */
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2); /* Sombra elegante */
-    animation: spinMini 25s linear infinite; /* Giro suave y lento */
+    background-color: white; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
+    animation: spinUnityStyle 6s linear infinite; 
     object-fit: contain;
     transition: transform 0.3s ease;
 }
 
+/* Al pasar el mouse hace un zoom ligero y pausa el giro para darle clic */
 .wa-spin-mini:hover {
     transform: scale(1.1);
     animation-play-state: paused;
 }
 
-@keyframes spinMini {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); } /* Giro LÓGICO en sentido de las agujas del reloj */
+/* Animación 3D en CSS equivalente a Vector3.up de Unity */
+@keyframes spinUnityStyle {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); } 
 }
 
 /* PORTADA Y FONDO */
 .hero img { width: 100%; height: auto; display: block; }
 main { background-image: url('https://i.postimg.cc/nLD4zLyx/Fondo.png'); background-repeat: repeat; background-attachment: fixed; }
 
-/* PRODUCTOS purificados (sin botones de carrito) */
+/* PRODUCTOS purificados */
 .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 40px; padding: 40px; max-width: 1200px; margin: 0 auto; }
 .product-card { padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.06); transition: transform 0.3s ease; border: 1px solid rgba(255,255,255,0.3); }
 .product-card:hover { transform: translateY(-10px); }
@@ -108,4 +109,6 @@ main { background-image: url('https://i.postimg.cc/nLD4zLyx/Fondo.png'); backgro
 @media (max-width: 600px) {
     .qr-container { top: 10px; left: 10px; padding: 5px; }
     .qr-container img { width: 45px; height: 45px; }
+    /* Ajuste para que en celular no quede tan separado y quepa bien en la pantalla */
+    .collection-title-container { gap: 25px; } 
 }
