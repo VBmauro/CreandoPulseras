@@ -6,13 +6,57 @@
     --wa-green: #25d366; 
     --wa-dark-green: #1da851;
     --card-bg: rgba(255, 255, 255, 0.9);
-    --font-elegant: 'Playfair Display', serif; /* Fuente para momentos "llegadores" */
+    --font-elegant: 'Playfair Display', serif; 
     --font-main: 'Helvetica Neue', Arial, sans-serif;
 }
 
 body { font-family: var(--font-main); margin: 0; padding: 0; overflow-x: hidden; color: var(--text); }
 
-/* QR FLOTANTE (Superior Izquierda) */
+/* =========================================
+   NUEVO: LOGO FLOTANTE GIRATORIO (Lado Izquierdo Centrado)
+   ========================================= */
+.floating-logo {
+    position: fixed;
+    top: 50%; /* Centrado vertical */
+    left: 20px; /* Separación de la izquierda */
+    transform: translateY(-50%); /* Ajuste preciso para centrar */
+    z-index: 1100; /* Por encima del QR (1000) y contenido, debajo de modales (2000) */
+    width: 80px; /* Tamaño del logo */
+    height: 80px;
+    background: white; /* Fondo blanco para que resalte */
+    padding: 10px;
+    border-radius: 50%; /* Contenedor circular */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15); /* Sombra elegante */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición suave al pasar el mouse */
+    cursor: pointer;
+}
+
+/* Animación de giro continuo para la imagen dentro del enlace */
+.floating-logo img {
+    width: 100%;
+    height: auto;
+    animation: spin 15s linear infinite; /* 15 segundos por vuelta, suave, infinito */
+}
+
+/* Definición de la animación de giro */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Efecto al pasar el mouse: se detiene el giro y se agranda un poco */
+.floating-logo:hover {
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+}
+.floating-logo:hover img {
+    animation-play-state: paused; /* Pausa el giro al hacer hover */
+}
+
+/* QR FLOTANTE (Superior Izquierda - Se mantiene) */
 .qr-container {
     position: fixed; top: 20px; left: 20px; z-index: 1000;
     background: white; padding: 8px; border-radius: 10px;
@@ -32,9 +76,7 @@ main {
     padding-bottom: 50px;
 }
 
-/* =========================================
-   NUEVA SECCIÓN: Invitación a la Orden (EMOTIVA Y PROFESIONAL)
-   ========================================= */
+/* SECCIÓN: Invitación a la Orden */
 .order-invitation {
     padding: 60px 20px 20px;
     display: flex;
@@ -42,99 +84,51 @@ main {
     max-width: 1200px;
     margin: 0 auto;
 }
-
 .invitation-card {
     background: var(--card-bg);
     padding: 40px;
     border-radius: 20px;
-    box-shadow: 0 15px 40px rgba(111, 78, 55, 0.1); /* Sombra suave color café */
-    border: 1px solid rgba(212, 175, 55, 0.2); /* Borde dorado muy suave */
+    box-shadow: 0 15px 40px rgba(111, 78, 55, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.2);
     text-align: center;
     max-width: 700px;
     position: relative;
     backdrop-filter: blur(5px);
 }
-
-.invitation-icon {
-    font-size: 30px;
-    color: var(--accent);
-    margin-bottom: 15px;
-}
-
-/* Título con la fuente elegante */
+.invitation-icon { font-size: 30px; color: var(--accent); margin-bottom: 15px; }
 .invitation-card h2 {
     font-family: var(--font-elegant);
     color: var(--cafe);
-    font-style: italic;
-    font-weight: 700;
-    font-size: 2.2rem;
-    margin: 0 0 20px 0;
-    text-transform: none; /* Quitamos mayúsculas para suavizar */
-    letter-spacing: normal;
+    font-style: italic; font-weight: 700; font-size: 2.2rem;
+    margin: 0 0 20px 0; text-transform: none; letter-spacing: normal;
 }
-
-.invitation-card p {
-    font-size: 16px;
-    line-height: 1.7;
-    color: #555;
-    margin-bottom: 15px;
-}
-
-.emotive-text {
-    font-family: var(--font-elegant);
-    font-size: 1.4rem;
-    color: var(--accent);
-    font-weight: bold;
-    margin-top: 25px !important;
-}
-
+.invitation-card p { font-size: 16px; line-height: 1.7; color: #555; margin-bottom: 15px; }
+.emotive-text { font-family: var(--font-elegant); font-size: 1.4rem; color: var(--accent); font-weight: bold; margin-top: 25px !important; }
 .action-area {
-    margin-top: 30px;
-    border-top: 1px solid #eee;
-    padding-top: 25px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
+    margin-top: 30px; border-top: 1px solid #eee; padding-top: 25px;
+    display: flex; flex-direction: column; align-items: center; gap: 15px;
 }
-
-.action-area span {
-    font-size: 13px;
-    color: #777;
-    max-width: 400px;
-}
-
-/* BOTÓN DE WHATSAPP ESTILIZADO */
+.action-area span { font-size: 13px; color: #777; max-width: 400px; }
 .wa-order-btn {
     display: inline-block;
     background-color: var(--wa-green);
-    color: white;
-    text-decoration: none;
-    padding: 15px 35px;
-    border-radius: 50px;
-    font-weight: bold;
-    font-size: 16px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    color: white; text-decoration: none;
+    padding: 15px 35px; border-radius: 50px;
+    font-weight: bold; font-size: 16px;
+    text-transform: uppercase; letter-spacing: 1px;
     box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
     transition: all 0.3s ease;
 }
-
 .wa-order-btn:hover {
     background-color: var(--wa-dark-green);
     transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
 }
 
-/* Título de la colección (reestilizado para contrastar) */
+/* Título de la colección */
 main h2 { 
-    text-align: center; 
-    padding: 40px 0 10px; 
-    color: var(--accent); 
-    letter-spacing: 3px; 
-    text-transform: uppercase; 
-    font-weight: 300; 
-    font-size: 1.5rem;
+    text-align: center; padding: 40px 0 10px; color: var(--accent); 
+    letter-spacing: 3px; text-transform: uppercase; font-weight: 300; font-size: 1.5rem;
 }
 
 /* PRODUCTOS */
@@ -157,7 +151,6 @@ main h2 {
 .hidden { display: none !important; }
 .zoom-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; display: flex; justify-content: center; align-items: center; }
 .contact-card { background: white; padding: 40px; border-radius: 20px; text-align: center; position: relative; width: 90%; max-width: 380px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-
 #zoomed-img { max-width: 90%; max-height: 90%; border-radius: 10px; }
 .close-zoom, .close-btn { cursor: pointer; font-size: 24px; font-weight: bold; }
 .close-zoom { position: absolute; top: 20px; right: 30px; color: white; }
@@ -169,8 +162,14 @@ main h2 {
 }
 
 @media (max-width: 600px) {
-    .qr-container { top: 10px; left: 10px; padding: 5px; }
-    .qr-container img { width: 45px; height: 45px; }
+    /* Ajuste del logo flotante en celulares */
+    .floating-logo {
+        width: 55px; /* Más pequeño en móvil */
+        height: 55px;
+        left: 10px; /* Más pegado al borde */
+        padding: 6px;
+    }
+    .qr-container { top: 10px; left: 10px; padding: 5px; display: none; /* Ocultamos QR en móvil para no saturar si ya está el logo */ }
     .order-invitation { padding-top: 40px; }
     .invitation-card { padding: 25px; }
     .invitation-card h2 { font-size: 1.6rem; }
