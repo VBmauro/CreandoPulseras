@@ -29,8 +29,7 @@ function renderProducts() {
         card.style.backgroundColor = randomColor;
         card.innerHTML = `
             <img src="${product.image}" onclick="openZoom(this.src)">
-            <h3>SKU: ${product.sku}</h3>
-            <p>${product.description}</p>
+            <h3>${product.sku}</h3> <p>${product.description}</p>
             <small>${product.measurements} | Stock: ${product.stock}</small>
             <h4 style="color:#d4af37; font-size:1.2rem;">$${parseFloat(product.price).toFixed(2)}</h4>
         `;
